@@ -1,0 +1,11 @@
+.gallery__like {
+    border: none;
+    min-width: 21px;
+    min-height: 18px;
+    background: none;
+    background-image: url('../../../images/gallery/like.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    line-height: 1.2;
+
+}

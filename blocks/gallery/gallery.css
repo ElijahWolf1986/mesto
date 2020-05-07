@@ -1,0 +1,21 @@
+@import url('./__elements/gallery__elements.css');
+@import url('./__element/gallery__element.css');
+@import url('./__img/gallery__img.css');
+@import url('./__like/gallery__like.css');
+@import url('./__place/gallery__place.css');
+@import url('./__title/gallery__title.css');
+
+
+.gallery {
+    display: grid;
+    grid-gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+    max-width: 882px;
+    margin: 0 auto;
+    }
+
+@media screen and (max-width: 1005px) {
+    .gallery {
+        margin: 0 6%;
+    }
+}

@@ -11,6 +11,7 @@
     border: none;
     padding: 0;
     margin: 16px auto 36.5px auto;
+    cursor: pointer;
 }
 
 .popup__button-save:focus {

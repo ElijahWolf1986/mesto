@@ -21,9 +21,9 @@ closeButton.addEventListener('click', function () {
 //Работа кнопки "сохранить" - с внесение изменений
 saveButton.addEventListener('click', function (evt) {
     evt.preventDefault();
-    profileUserName.textContent = userName.value;
+    profileUserName.textContent = userName.value; 
     profileMetier.textContent = metier.value;
-    popup.classList.remove('popup_state_opened');
+    popup.classList.remove('popup_state_opened'); //закрываем popup контейнер
 });
 
 

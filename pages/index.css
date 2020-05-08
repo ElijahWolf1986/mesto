@@ -5,3 +5,4 @@
 @import url('../blocks/profile/profile.css');
 @import url('../blocks/gallery/gallery.css');
 @import url('../blocks/footer/footer.css');
+@import url('../blocks/popup/_state_opened/popup_state_opened.css');

@@ -16,3 +16,7 @@
     cursor: pointer;
     background-image: url('../../../images/gallery/like-red+.svg');
 }
+
+.gallery__like:focus {
+    outline: none;
+}

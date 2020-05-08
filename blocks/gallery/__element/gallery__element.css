@@ -1,8 +1,5 @@
 .gallery__element {
-        /* width: 100%;
-        object-fit: cover; */
         background-color: #fff;
         border-radius: 10px 10px 10px 10px;
-        /* transform: matrix(-1, 0, 0, 1, 0, 0); */
         overflow: hidden;
 }

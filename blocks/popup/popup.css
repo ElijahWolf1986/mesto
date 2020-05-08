@@ -1,0 +1,33 @@
+@import url('./__close-icon/popup__close-icon.css');
+@import url('./__container/popup__container.css');
+@import url('./_opened/popup_opened.css');
+@import url('./__title/popup__title.css');
+@import url('./__form-author-info/popup__form-author-info.css');
+@import url('./__input/popup__input.css');
+@import url('./__button-save/popup__button-save.css');
+
+
+.popup {
+    /* display: none; */
+    background-color: #fff;
+    position: absolute;
+    /* border: 1px solid red; */
+    width: 430px;
+    height: 330px;
+    left: 50%;
+    margin-left: -215px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, .15);
+}
+
+
+@media screen and (max-width: 550px) {
+    .popup {
+        width: 80%;
+        margin-left: -40%;
+    }
+} 
+
+    
+   

@@ -1,0 +1,14 @@
+.popup__input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.95;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid rgb(128, 128, 128, 0.2);
+    margin-bottom: 30px;
+}
+
+.popup__input:focus {
+    outline-color: rgb(6, 103, 182);
+}

@@ -15,11 +15,20 @@
         <header class="header">
             <img src="./images/header/logo.svg" alt="логотип_сайта" class="header__logo">
         </header>
-
         <main class="content">
-            <section class="popup"></section>
-
-
+            <!-- Section Popup -->
+            <section class="popup">
+                <button class="popup__close-icon"></button>
+                <form action="" class="popup__container">
+                    <h2 class="popup__title">Редактировать профиль</h2>
+                    <fieldset class="popup__form-author-info">
+                        <input type="text" name="author" value="Жак-Ив Кусто" class="popup__input" />
+                        <input type="text" name="metier" value="Исследователь океана" class="popup__input" />
+                    </fieldset> 
+                    <button type="submit" value="save" class="popup__button-save">Сохранить</button>                   
+                </form>
+            </section>
+            <!-- Section Profile -->
             <section class="profile">
                 <div class="profile__wrapper">
                     <img src="./images/profile/avatar.jpg" alt="аватар" class="profile__avatar">
@@ -33,8 +42,8 @@
                 </div>
                 <button class="profile__add-button"></button>
             </section>
+            <!-- Section Gallery -->
             <section class="gallery">
-
                     <div class="gallery__element">
                         <img src="./images/gallery/grand_canyon.jpg" alt="Красная Поляна" class="gallery__img">
                         <div class="gallery__place">
@@ -78,19 +87,11 @@
                         </div>
                     </div>
             </section>
+            <!-- Section Footer -->
             <section class="footer">
                 <div class="footer__copyright">&copy; 2020 Mesto Russia</div>
             </section>
         </main>
-        
-        
-        
     </div>
-
-
-
-
-
-    
 </body>
 </html>

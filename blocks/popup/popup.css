@@ -4,25 +4,26 @@
 @import url('./__form-author-info/popup__form-author-info.css');
 @import url('./__input/popup__input.css');
 @import url('./__button-save/popup__button-save.css');
+@import url('./__form/popup__form.css');
 
 .popup {
     display: none;
-    background-color: #fff;
-    position: absolute;
-    width: 430px;
-    height: 330px;
+    background-color: rgba(0, 0, 0, .5);
+    max-width: 882px;
+    min-height: 100%;
+    position: fixed;
+    width: 100%;
     left: 50%;
-    margin-left: -215px;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 25px rgba(0, 0, 0, .15);
-}
+    top: 0;
+    margin-left: -441px;
+    top: 0;
 
+}
 
 @media screen and (max-width: 550px) {
     .popup {
-        width: 80%;
-        margin-left: -40%;
+        width: 90%;
+        margin-left: -45%;
     }
 } 
 

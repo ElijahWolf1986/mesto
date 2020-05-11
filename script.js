@@ -8,22 +8,24 @@ let popupForm = document.forms.popup; //Находим в DOM нашу форм�
 let userName = popupForm.elements.author; //Находим в DOM поле заполнения имен
 let metier = popupForm.elements.metier; //Находим в DOM поле заполнения рода занятий
 
-//Работа кнопки "внести изменения"
-editButton.addEventListener('click', function () {
-    popup.classList.add('popup_state_opened');
 
-});
-//Работа кнопки "закрыть" - без внесения изменений
-closeButton.addEventListener('click', function () {
-    popup.classList.remove('popup_state_opened');
+function popupCloseOpen () {
+    if (popup.className === 'popup popup_state_opened') popup.classList.remove('popup_state_opened');
+    else {
+        popup.classList.add('popup_state_opened');
+        userName.value = profileUserName.textContent;
+        metier.value = profileMetier.textContent;
+    } 
+}
 
-});
-//Работа кнопки "сохранить" - с внесение изменений
-saveButton.addEventListener('click', function (evt) {
-    evt.preventDefault();
+function addInfoPopup (submit) {
+    submit.preventDefault();
     profileUserName.textContent = userName.value; 
     profileMetier.textContent = metier.value;
-    popup.classList.remove('popup_state_opened'); //закрываем popup контейнер
-});
+    popupCloseOpen ();
+}
 
+closeButton.addEventListener('click', popupCloseOpen);
+editButton.addEventListener('click', popupCloseOpen); 
+saveButton.addEventListener('click', addInfoPopup);
 

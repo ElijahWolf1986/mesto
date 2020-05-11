@@ -1,4 +1,3 @@
-@import url('./__elements/gallery__elements.css');
 @import url('./__element/gallery__element.css');
 @import url('./__img/gallery__img.css');
 @import url('./__like/gallery__like.css');
@@ -17,5 +16,11 @@
 @media screen and (max-width: 1005px) {
     .gallery {
         margin: 0 6%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .gallery {
+        grid-template-columns: 1fr;
     }
 }

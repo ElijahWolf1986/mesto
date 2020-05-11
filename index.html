@@ -15,18 +15,6 @@
             <img src="./images/header/logo.svg" alt="логотип_сайта" class="header__logo">
         </header>
         <main class="content">
-            <!-- Section Popup -->
-            <section class="popup">
-                <button class="popup__close-icon"></button>
-                <form name="popup" class="popup__container">
-                    <h2 class="popup__title">Редактировать профиль</h2>
-                    <fieldset class="popup__form-author-info">
-                        <input type="text" name="author" value="Жак-Ив Кусто" class="popup__input" />
-                        <input type="text" name="metier" value="Исследователь океана" class="popup__input" />
-                    </fieldset> 
-                    <button type="submit" value="save" class="popup__button-save">Сохранить</button>                   
-                </form>
-            </section>
             <!-- Section Profile -->
             <section class="profile">
                 <div class="profile__wrapper">
@@ -34,12 +22,12 @@
                     <div class="profile__data-container">
                         <div class="profile__info">
                             <h1 class="profile__info-title">Жак-Ив Кусто</h1>
-                            <button class="profile__info-edit-button"></button>
+                            <button type="button" class="profile__info-edit-button"></button>
                         </div>
                         <p class="profile__info-subtitle">Исследователь океана</p>
                     </div>
                 </div>
-                <button class="profile__add-button"></button>
+                <button type="button" class="profile__add-button"></button>
             </section>
             <!-- Section Gallery -->
             <section class="gallery">
@@ -47,51 +35,65 @@
                         <img src="./images/gallery/grand_canyon.jpg" alt="Красная Поляна" class="gallery__img">
                         <div class="gallery__place">
                             <h3 class="gallery__title">Красная Поляна</h3>
-                            <button class="gallery__like"></button>
+                            <button type="button" class="gallery__like"></button>
                         </div>
                     </div>
                     <div class="gallery__element">
                         <img src="./images/gallery/antilope_canyone.jpg" alt="Каткова щель" class="gallery__img">
                         <div class="gallery__place">
                             <h3 class="gallery__title">Каткова щель</h3>
-                            <button class="gallery__like"></button>
+                            <button type="button" class="gallery__like"></button>
                         </div>
                     </div>
                     <div class="gallery__element">
                         <img src="./images/gallery/ny.jpg" alt="Челябинск" class="gallery__img">
                         <div class="gallery__place">
                             <h3 class="gallery__title">Челябинск</h3>
-                            <button class="gallery__like"></button>
+                            <button type="button" class="gallery__like"></button>
                         </div>
                     </div>
                     <div class="gallery__element">
-                        <img src="./images/gallery/Liberty_NY.jpg" alt="Обь, Новосибирск" class="gallery__img">
+                        <img src="./images/gallery/liberty_ny.jpg" alt="Обь, Новосибирск" class="gallery__img">
                         <div class="gallery__place">
                             <h3 class="gallery__title">Обь, Новосибирск</h3>
-                            <button class="gallery__like"></button>
+                            <button type="button" class="gallery__like"></button>
                         </div>
                     </div>
                     <div class="gallery__element">
-                        <img src="./images/gallery/Nappa.jpg" alt="Анапа" class="gallery__img">
+                        <img src="./images/gallery/nappa.jpg" alt="Анапа" class="gallery__img">
                         <div class="gallery__place">
                             <h3 class="gallery__title">Анапа</h3>
-                            <button class="gallery__like"></button>
+                            <button type="button" class="gallery__like"></button>
                         </div>
                     </div>
                     <div class="gallery__element">
                         <img src="./images/gallery/amelia_island.jpg" alt="Сочи" class="gallery__img">
                         <div class="gallery__place">
                             <h3 class="gallery__title">Сочи</h3>
-                            <button class="gallery__like"></button>
+                            <button type="button" class="gallery__like"></button>
                         </div>
                     </div>
             </section>
             <!-- Section Footer -->
             <section class="footer">
-                <div class="footer__copyright">&copy; 2020 Mesto Russia</div>
+                <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+            </section>
+            <!-- Section Popup -->
+            <section class="popup">
+                <div class="popup__container">
+                    <button type="button" class="popup__close-icon"></button>
+                    <form name="popup" action="#" method="POST" class="popup__form">
+                        <h2 class="popup__title">Редактировать профиль</h2>
+                        <fieldset class="popup__form-author-info">
+                            <input type="text" name="author" required placeholder="Введите имя" value="" class="popup__input"/>
+                            <input type="text" name="metier" required placeholder="Введите род занятий" value="" class="popup__input" />
+                        </fieldset> 
+                        <button type="submit" value="" class="popup__button-save">Сохранить</button>                   
+                    </form>
+                </div>
             </section>
         </main>
     </div>
-    <script src="./script.js"></script>
+        <script src="./script.js"></script>
 </body>
 </html>

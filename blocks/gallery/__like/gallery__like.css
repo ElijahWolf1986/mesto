@@ -5,16 +5,7 @@
     background: none;
     background-image: url('../../../images/gallery/like.svg');
     background-repeat: no-repeat;
-    background-size: cover;
-    line-height: 1.2;
-    transition: transform 0.2s linear 0.05s;
-
-}
-
-.gallery__like:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-    background-image: url('../../../images/gallery/like-red+.svg');
+    background-size: cover;    
 }
 
 .gallery__like:focus {

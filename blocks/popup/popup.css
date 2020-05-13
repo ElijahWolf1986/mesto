@@ -9,22 +9,11 @@
 .popup {
     display: none;
     background-color: rgba(0, 0, 0, .5);
-    max-width: 882px;
-    min-height: 100%;
     position: fixed;
-    width: 100%;
-    left: 50%;
+    left: 0;
     top: 0;
-    margin-left: -441px;
-    top: 0;
-
+    right: 0;
+    bottom: 0;
 }
-
-@media screen and (max-width: 550px) {
-    .popup {
-        width: 90%;
-        margin-left: -45%;
-    }
-} 
 
     

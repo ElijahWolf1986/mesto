@@ -10,7 +10,9 @@ let metier = popupForm.elements.metier; //Находим в DOM поле зап�
 
 
 function popupCloseOpen () {
-    if (popup.className === 'popup popup_state_opened') popup.classList.remove('popup_state_opened');
+    if (popup.classList.contains('popup_state_opened')) {
+        popup.classList.remove('popup_state_opened');
+}
     else {
         popup.classList.add('popup_state_opened');
         userName.value = profileUserName.textContent;
@@ -18,14 +20,14 @@ function popupCloseOpen () {
     } 
 }
 
-function addInfoPopup (submit) {
-    submit.preventDefault();
+function forSubmitHandler (evt) {
+    evt.preventDefault();
     profileUserName.textContent = userName.value; 
     profileMetier.textContent = metier.value;
     popupCloseOpen ();
+    
 }
 
 closeButton.addEventListener('click', popupCloseOpen);
 editButton.addEventListener('click', popupCloseOpen); 
-saveButton.addEventListener('click', addInfoPopup);
-
+popupForm.addEventListener('submit', forSubmitHandler); 

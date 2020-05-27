@@ -94,8 +94,6 @@ function addNewCard (name, link) { // Функция создания новой
     newCard.querySelector('.gallery__title').textContent = name;
     newCard.querySelector('.gallery__img').src = link;
     newCard.querySelector('.gallery__img').alt = name;
-    
-
     const delButton = newCard.querySelector('.gallery__trash');
     delButton.addEventListener('click',  (evt) => { evt.target.closest('.gallery__element').remove()});
     const likeButton = newCard.querySelector('.gallery__like');
@@ -107,8 +105,6 @@ function addNewCard (name, link) { // Функция создания новой
         popupView.querySelector('.popup__title-view').textContent =  evt.target.closest('.gallery__img').alt;
         popupCloseOpen (popupView);
     });
-
-
     gallery.prepend(newCard);
 }
 
@@ -128,7 +124,6 @@ closePlaceButton.addEventListener('click', () => {popupCloseOpen(popupPlace)});
 editButton.addEventListener('click', () => {popupCloseOpen(popupAuthor)}); 
 addButton.addEventListener('click', () => {popupCloseOpen(popupPlace)}); 
 closeViewButton.addEventListener('click', () => {popupCloseOpen(popupView)});
-
 popupFormAuthor.addEventListener('submit', forSubmitHandler); //Работа кнопки "Сохранить" по событию submit
 popupFormPlace.addEventListener('submit', forAddNewCard); //Работа кнопки "Создать" по событию submit
 

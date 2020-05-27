@@ -5,15 +5,23 @@
 @import url('./__input/popup__input.css');
 @import url('./__button-save/popup__button-save.css');
 @import url('./__form/popup__form.css');
+@import url('./__container-view/popup__container-view.css');
+@import url('./__img-view/popup__img-view.css');
+@import url('./__title-view/popup__title-view.css');
+
 
 .popup {
-    display: none;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.6s, opacity 0.6s linear;
     background-color: rgba(0, 0, 0, .5);
     position: fixed;
     left: 0;
     top: 0;
     right: 0;
     bottom: 0;
+    
 }
 
     

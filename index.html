@@ -36,10 +36,10 @@
                 <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
             </section>
             <!-- Section Popup-Author -->
-            <section id='popupAuthor' class="popup">
+            <section id='popup-author' class="popup">
                 <div class="popup__container">
                     <button type="button" class="popup__close-icon"></button>
-                    <form name="popupAuthorForm" action="#" method="POST" class="popup__form">
+                    <form name="popup_author_form" action="#" method="POST" class="popup__form">
                         <h2 class="popup__title">Редактировать профиль</h2>
                         <fieldset class="popup__form-author-info">
                             <input type="text" name="author" required placeholder="Введите имя" value="" class="popup__input"/>
@@ -50,10 +50,10 @@
                 </div>
             </section>
             <!-- Section Popup-Place -->
-            <section id='popupPlace' class="popup">
+            <section id='popup-place' class="popup">
                 <div class="popup__container">
                     <button type="button" name='closePlace' class="popup__close-icon"></button>
-                    <form name="popupPlaceForm" action="#" method="POST" class="popup__form">
+                    <form name="popup_place_form" action="#" method="POST" class="popup__form">
                         <h2 class="popup__title">Новое место</h2>
                         <fieldset class="popup__form-author-info">
                             <input type="text" name="place" required placeholder="Название" value="" class="popup__input"/>
@@ -64,7 +64,7 @@
                 </div>
             </section>
              <!-- Section Popup-View -->
-            <section id='popupView' class="popup">
+            <section id='popup-view' class="popup">
                 <div class="popup__container-view">
                     <button type="button" name='closePlace' class="popup__close-icon"></button>
                     <img src="" alt="" class="popup__img-view">
@@ -74,13 +74,13 @@
         </main>
     </div>
      <!-- Section Template-Card -->
-    <template id="card">
-        <div class="gallery__element">
-            <button class="gallery__trash"></button>
-            <img src="" alt="" class="gallery__img">
-            <div class="gallery__place">
-                <h3 class="gallery__title"></h3>
-                <button type="button" class="gallery__like"></button>
+     <template id="card">
+        <div class="card">
+            <button class="card__trash"></button>
+            <img src="" alt="" class="card__img">
+            <div class="card__place">
+                <h3 class="card__title"></h3>
+                <button type="button" class="card__like"></button>
             </div>
         </div>
     </template>

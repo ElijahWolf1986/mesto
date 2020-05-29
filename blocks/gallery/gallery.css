@@ -1,12 +1,3 @@
-@import url('./__element/gallery__element.css');
-@import url('./__img/gallery__img.css');
-@import url('./__like/gallery__like.css');
-@import url('./__place/gallery__place.css');
-@import url('./__title/gallery__title.css');
-@import url('./__trash/gallery__trash.css');
-@import url('./__like/_state_active/gallery__like_state_active.css');
-
-
 .gallery {
     display: grid;
     grid-gap: 18px;

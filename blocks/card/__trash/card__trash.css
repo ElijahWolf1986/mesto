@@ -1,21 +1,22 @@
-.gallery__like {
+.card__trash {
+    position: absolute;
+    top: 18px;
+    right: 15px;
     border: none;
-    min-width: 22px;
+    min-width: 18px;
     min-height: 19px;
     background: none;
-    background-image: url('../../../images/gallery/like.svg');
+    background-image: url('../../../images/gallery/trash.svg');
     background-repeat: no-repeat;
     background-size: cover;    
     padding: 0;
 }
 
-.gallery__like:hover {
+.card__trash:hover {
     opacity: 0.6;
     cursor: pointer;
-    
 }
 
-.gallery__like:focus {
+.card__trash:focus {
     outline: none;
 }
-

@@ -27,60 +27,31 @@ const initialCards = [
 ];
 
 // Выбор элементов для работы с окном "Новое место"
-const popupPlace = document.querySelector('#popupPlace');
+const popupPlace = document.querySelector('#popup-place');
 const addButton = document.querySelector('.profile__add-button'); 
 const closePlaceButton = popupPlace.querySelector('.popup__close-icon');
-const popupFormPlace = document.forms.popupPlaceForm; 
-let place = popupFormPlace.elements.place; 
-let url = popupFormPlace.elements.url; 
+const popupFormPlace = document.forms.popup_place_form; 
+const place = popupFormPlace.elements.place; 
+const url = popupFormPlace.elements.url; 
 const gallery = document.querySelector('.gallery'); 
 const cardTemplate = document.querySelector('#card').content; 
 
 // Выбор элементов для работы с окном "Редактировать профиль"
-const popupAuthor = document.querySelector('#popupAuthor'); 
+const popupAuthor = document.querySelector('#popup-author'); 
 const editButton = document.querySelector('.profile__info-edit-button'); 
 const closeButtonAuthor = popupAuthor.querySelector('.popup__close-icon'); 
-let profileUserName = document.querySelector('.profile__info-title'); 
-let profileMetier = document.querySelector('.profile__info-subtitle'); 
-const popupFormAuthor = document.forms.popupAuthorForm; 
-let userName = popupFormAuthor.elements.author; 
-let metier = popupFormAuthor.elements.metier; 
-
+const profileUserName = document.querySelector('.profile__info-title'); 
+const profileMetier = document.querySelector('.profile__info-subtitle'); 
+const popupFormAuthor = document.forms.popup_author_form; 
+const userName = popupFormAuthor.elements.author; 
+const metier = popupFormAuthor.elements.metier; 
 
 //Выбор элементов для работы с "Обзорынм окном"
-const popupView = document.querySelector('#popupView');
+const popupView = document.querySelector('#popup-view');
 const closeViewButton = popupView.querySelector('.popup__close-icon');
-
-
-// Функция вывода массива на экран
-function render () {
-    initialCards.forEach(function (el) {
-        const newCard = cardTemplate.cloneNode(true); //Клонирование шаблона
-        newCard.querySelector('.gallery__title').textContent = el.name;
-        newCard.querySelector('.gallery__img').src = el.link;
-        newCard.querySelector('.gallery__img').alt = el.name;
-        const delButton = newCard.querySelector('.gallery__trash');
-        delButton.addEventListener('click',  (evt) => { evt.target.closest('.gallery__element').remove()});
-        const likeButton = newCard.querySelector('.gallery__like');
-        likeButton.addEventListener('click',  (evt) => { evt.target.closest('.gallery__like').classList.toggle('gallery__like_state_active')});
-        const imgButton = newCard.querySelector('.gallery__img');
-        imgButton.addEventListener('click', function (evt) {
-            popupView.querySelector('.popup__img-view').src = evt.target.closest('.gallery__img').src;
-            popupView.querySelector('.popup__img-view').alt = evt.target.closest('.gallery__img').alt;
-            popupView.querySelector('.popup__title-view').textContent =  evt.target.closest('.gallery__img').alt;
-            popupCloseOpen (popupView);
-        });
-        gallery.append(newCard);
-    } );
-}
-
-function popupCloseOpen (el) { // Функция Открытия/Закрытия всплывющих окон (Универсальная)
-    if (el === popupAuthor) {
-        userName.value = profileUserName.textContent;
-        metier.value = profileMetier.textContent;
-        el.classList.toggle('popup_state_opened');  
-    } else  el.classList.toggle('popup_state_opened');    
-}
+const popupImgView = popupView.querySelector('.popup__img-view');
+const popupTitleView = popupView.querySelector('.popup__title-view');
+const newCard = 0;
 
 function forSubmitHandler (evt) { // Функция изменения данных по Автору
     evt.preventDefault();
@@ -89,41 +60,68 @@ function forSubmitHandler (evt) { // Функция изменения данн�
     popupCloseOpen (popupAuthor);   
 }
 
-function addNewCard (name, link) { // Функция создания новой карточки
-    const newCard = cardTemplate.cloneNode(true); //Клонирование шаблона
-    newCard.querySelector('.gallery__title').textContent = name;
-    newCard.querySelector('.gallery__img').src = link;
-    newCard.querySelector('.gallery__img').alt = name;
-    const delButton = newCard.querySelector('.gallery__trash');
-    delButton.addEventListener('click',  (evt) => { evt.target.closest('.gallery__element').remove()});
-    const likeButton = newCard.querySelector('.gallery__like');
-    likeButton.addEventListener('click',  (evt) => { evt.target.closest('.gallery__like').classList.toggle('gallery__like_state_active')});
-    const imgButton = newCard.querySelector('.gallery__img');
-    imgButton.addEventListener('click', function (evt) {
-        popupView.querySelector('.popup__img-view').src = evt.target.closest('.gallery__img').src;
-        popupView.querySelector('.popup__img-view').alt = evt.target.closest('.gallery__img').alt;
-        popupView.querySelector('.popup__title-view').textContent =  evt.target.closest('.gallery__img').alt;
-        popupCloseOpen (popupView);
-    });
-    gallery.prepend(newCard);
+function popupCloseOpen (el) { //Функция открытия/закрытия всплывающих окон
+    el.classList.toggle('popup_state_opened');
 }
 
-function forAddNewCard (evt) { // Функция добавления новой карточки
+function cardDelete (evt) { //Функция удаления карточек
+    evt.target.closest('.card').remove();
+}
+
+function cardLike (evt) { //Функция лайка карточек
+    evt.target.closest('.card__like').classList.toggle('card__like_state_active');
+}
+
+function createNewCard (name, link) { // Функция создания новой карточки: получаем шаблон, собираем карточку, устанавливаем слушатели
+    const newCard = cardTemplate.cloneNode(true); //Клонирование шаблона
+    const cardTitle = newCard.querySelector('.card__title');
+    const cardImg = newCard.querySelector('.card__img');
+    cardTitle.textContent = name;
+    cardImg.src = link;
+    cardImg.alt = name;
+    const delButton = newCard.querySelector('.card__trash');
+    delButton.addEventListener('click',  cardDelete);
+    const likeButton = newCard.querySelector('.card__like');
+    likeButton.addEventListener('click', cardLike);
+    const imgButton = newCard.querySelector('.card__img');
+    imgButton.addEventListener('click', cardView);
+    return newCard;
+}
+
+function putCard (el) { //Функция добавления карточки в разметку в конец показа
+    gallery.append(createNewCard(el.name, el.link));
+}
+
+function renderCards () { //Функция вывода карточек на экран
+    initialCards.forEach(putCard);
+}
+
+function forAddNewCard (evt) { // Функция добавления новой карточки пользователя в начало показа
     evt.preventDefault();  
-    addNewCard (place.value, url.value);
+    gallery.prepend(createNewCard(place.value, url.value));
     place.value = '';
     url.value = '';
     popupCloseOpen(popupPlace);
-    
+}
+
+function cardView (evt) { //Функция открытия карточки 
+    popupImgView.src = evt.target.closest('.card__img').src;
+    popupImgView.alt = evt.target.closest('.card__img').alt;
+    popupTitleView.textContent =  evt.target.closest('.card__img').alt;
+    popupCloseOpen (popupView);
 }
 
 // Исполнение задач на странице пользователя:
-render();
-closeButtonAuthor.addEventListener('click', () => {popupCloseOpen(popupAuthor)});
-closePlaceButton.addEventListener('click', () => {popupCloseOpen(popupPlace)}); 
-editButton.addEventListener('click', () => {popupCloseOpen(popupAuthor)}); 
-addButton.addEventListener('click', () => {popupCloseOpen(popupPlace)}); 
-closeViewButton.addEventListener('click', () => {popupCloseOpen(popupView)});
+renderCards(initialCards);
+closeButtonAuthor.addEventListener('click', () => {popupCloseOpen(popupAuthor)}); //Кнопка закрытия редактирования автора
+editButton.addEventListener('click', function () { //Кнопка открытия редактирования автора
+        userName.value = profileUserName.textContent;
+        metier.value = profileMetier.textContent;
+        popupCloseOpen(popupAuthor);    
+});
+closePlaceButton.addEventListener('click', () => {popupCloseOpen(popupPlace)}); //Кнопка закрытия редактирования карточек
+addButton.addEventListener('click', () => {popupCloseOpen(popupPlace)}); //Кнопка открытия редактирования карточек
+closeViewButton.addEventListener('click', () => {popupCloseOpen(popupView)}); //Кнопка закрытия карточки
 popupFormAuthor.addEventListener('submit', forSubmitHandler); //Работа кнопки "Сохранить" по событию submit
 popupFormPlace.addEventListener('submit', forAddNewCard); //Работа кнопки "Создать" по событию submit
 

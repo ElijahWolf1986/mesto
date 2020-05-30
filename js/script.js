@@ -51,7 +51,10 @@ const popupView = document.querySelector('#popup-view');
 const closeViewButton = popupView.querySelector('.popup__close-icon');
 const popupImgView = popupView.querySelector('.popup__img-view');
 const popupTitleView = popupView.querySelector('.popup__title-view');
-const newCard = 0;
+
+function popupCloseOpen (el) { //Функция открытия/закрытия всплывающих окон
+    el.classList.toggle('popup_state_opened');
+}
 
 function forSubmitHandler (evt) { // Функция изменения данных по Автору
     evt.preventDefault();
@@ -60,16 +63,20 @@ function forSubmitHandler (evt) { // Функция изменения данн�
     popupCloseOpen (popupAuthor);   
 }
 
-function popupCloseOpen (el) { //Функция открытия/закрытия всплывающих окон
-    el.classList.toggle('popup_state_opened');
-}
-
 function cardDelete (evt) { //Функция удаления карточек
     evt.target.closest('.card').remove();
 }
 
 function cardLike (evt) { //Функция лайка карточек
     evt.target.closest('.card__like').classList.toggle('card__like_state_active');
+}
+
+function cardView (evt) { //Функция открытия карточки 
+    const cardImg = evt.target.closest('.card__img');
+    popupImgView.src = cardImg.src;
+    popupImgView.alt = cardImg.alt;
+    popupTitleView.textContent =  cardImg.alt;
+    popupCloseOpen (popupView);
 }
 
 function createNewCard (name, link) { // Функция создания новой карточки: получаем шаблон, собираем карточку, устанавливаем слушатели
@@ -104,12 +111,7 @@ function forAddNewCard (evt) { // Функция добавления новой
     popupCloseOpen(popupPlace);
 }
 
-function cardView (evt) { //Функция открытия карточки 
-    popupImgView.src = evt.target.closest('.card__img').src;
-    popupImgView.alt = evt.target.closest('.card__img').alt;
-    popupTitleView.textContent =  evt.target.closest('.card__img').alt;
-    popupCloseOpen (popupView);
-}
+
 
 // Исполнение задач на странице пользователя:
 renderCards(initialCards);

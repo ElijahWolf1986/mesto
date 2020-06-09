@@ -37,13 +37,16 @@
             </section>
             <!-- Section Popup-Author -->
             <section id='popup-author' class="popup">
+                <div class="popup__overlay"> </div>
                 <div class="popup__container">
                     <button type="button" class="popup__close-icon"></button>
                     <form name="popup_author_form" action="#" method="POST" class="popup__form">
                         <h2 class="popup__title">Редактировать профиль</h2>
                         <fieldset class="popup__form-author-info">
-                            <input type="text" name="author" required placeholder="Введите имя" value="" class="popup__input"/>
-                            <input type="text" name="metier" required placeholder="Введите род занятий" value="" class="popup__input" />
+                            <input id="author-input" type="text" name="author" required placeholder="Введите имя" value="" class="popup__input"/>
+                            <span id="author-input-error" class="popup__error_visible"></span>
+                            <input id="metier-input" type="text" name="metier" required placeholder="Введите род занятий" value="" class="popup__input" />
+                            <span id="metier-input-error" class="popup__error_visible"></span>
                         </fieldset> 
                         <button type="submit" value="" class="popup__button-save">Сохранить</button>                   
                     </form>
@@ -51,13 +54,16 @@
             </section>
             <!-- Section Popup-Place -->
             <section id='popup-place' class="popup">
+                <div class="popup__overlay"> </div>
                 <div class="popup__container">
                     <button type="button" name='closePlace' class="popup__close-icon"></button>
                     <form name="popup_place_form" action="#" method="POST" class="popup__form">
                         <h2 class="popup__title">Новое место</h2>
                         <fieldset class="popup__form-author-info">
-                            <input type="text" name="place" required placeholder="Название" value="" class="popup__input"/>
-                            <input type="text" name="url" required placeholder="Ссылка на картинку" value="" class="popup__input" />
+                            <input id="place-input" type="text" name="place" required placeholder="Название" value="" class="popup__input"/>
+                            <span id="place-input-error" class="popup__error_visible"></span>
+                            <input id="url-input" type="text" name="url" required placeholder="Ссылка на картинку" value="" class="popup__input" />
+                            <span id="url-input-error" class="popup__error_visible"></span>
                         </fieldset> 
                         <button type="submit" value="" class="popup__button-save">Создать</button>                   
                     </form>
@@ -65,6 +71,7 @@
             </section>
              <!-- Section Popup-View -->
             <section id='popup-view' class="popup">
+                <div class="popup__overlay"> </div>
                 <div class="popup__container-view">
                     <button type="button" name='closePlace' class="popup__close-icon"></button>
                     <img src="" alt="" class="popup__img-view">
@@ -84,6 +91,7 @@
             </div>
         </div>
     </template>
+    <script src="./js/validate.js"></script>
     <script src="./js/script.js"></script>
 </body>
 </html>

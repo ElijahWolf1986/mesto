@@ -29,32 +29,54 @@ const initialCards = [
 // Выбор элементов для работы с окном "Новое место"
 const popupPlace = document.querySelector('#popup-place');
 const addButton = document.querySelector('.profile__add-button'); 
-const closePlaceButton = popupPlace.querySelector('.popup__close-icon');
 const popupFormPlace = document.forms.popup_place_form; 
 const place = popupFormPlace.elements.place; 
 const url = popupFormPlace.elements.url; 
 const gallery = document.querySelector('.gallery'); 
 const cardTemplate = document.querySelector('#card').content; 
 
+
 // Выбор элементов для работы с окном "Редактировать профиль"
 const popupAuthor = document.querySelector('#popup-author'); 
 const editButton = document.querySelector('.profile__info-edit-button'); 
-const closeButtonAuthor = popupAuthor.querySelector('.popup__close-icon'); 
 const profileUserName = document.querySelector('.profile__info-title'); 
 const profileMetier = document.querySelector('.profile__info-subtitle'); 
 const popupFormAuthor = document.forms.popup_author_form; 
 const userName = popupFormAuthor.elements.author; 
-const metier = popupFormAuthor.elements.metier; 
+const metier = popupFormAuthor.elements.metier;  
 
 //Выбор элементов для работы с "Обзорынм окном"
 const popupView = document.querySelector('#popup-view');
-const closeViewButton = popupView.querySelector('.popup__close-icon');
 const popupImgView = popupView.querySelector('.popup__img-view');
 const popupTitleView = popupView.querySelector('.popup__title-view');
 
 function popupCloseOpen (el) { //Функция открытия/закрытия всплывающих окон
     el.classList.toggle('popup_state_opened');
+    document.addEventListener('keydown', closeByEsc, {once: true}); //Выполняется один раз после открытия попапа, а затем слушатель удаляется 
 }
+
+function closeByOverlay () { //Функция закрытия попапа по клику на овелей
+    const overlay = Array.from(document.querySelectorAll('.popup__overlay')); 
+    overlay.forEach(function (overlayItem) {
+        overlayItem.addEventListener('click', (evt) => {popupCloseOpen(evt.target.closest('.popup'))});
+    });
+}
+
+function closeByEsc (evt) { //Функция закрытия попапа по нажатию на Esc
+    const allPopup = Array.from(document.querySelectorAll('.popup')); 
+        if(evt.key === 'Escape') {
+            allPopup.forEach(function (popupItem) {
+                popupItem.classList.remove('popup_state_opened');
+            });
+        };
+}
+
+function closeButtons () { //Функция работы закрывающих кнопок на попапах
+    const closeButton = Array.from(document.querySelectorAll('.popup__close-icon'));
+    closeButton.forEach(function (item) {
+        item.addEventListener('click', (evt) => popupCloseOpen(evt.target.closest('.popup')));
+    });
+};
 
 function forSubmitHandler (evt) { // Функция изменения данных по Автору
     evt.preventDefault();
@@ -111,24 +133,16 @@ function forAddNewCard (evt) { // Функция добавления новой
     popupCloseOpen(popupPlace);
 }
 
-
-
 // Исполнение задач на странице пользователя:
 renderCards(initialCards);
-closeButtonAuthor.addEventListener('click', () => {popupCloseOpen(popupAuthor)}); //Кнопка закрытия редактирования автора
+closeByOverlay();
+closeButtons();
 editButton.addEventListener('click', function () { //Кнопка открытия редактирования автора
         userName.value = profileUserName.textContent;
         metier.value = profileMetier.textContent;
         popupCloseOpen(popupAuthor);    
 });
-closePlaceButton.addEventListener('click', () => {popupCloseOpen(popupPlace)}); //Кнопка закрытия редактирования карточек
 addButton.addEventListener('click', () => {popupCloseOpen(popupPlace)}); //Кнопка открытия редактирования карточек
-closeViewButton.addEventListener('click', () => {popupCloseOpen(popupView)}); //Кнопка закрытия карточки
 popupFormAuthor.addEventListener('submit', forSubmitHandler); //Работа кнопки "Сохранить" по событию submit
 popupFormPlace.addEventListener('submit', forAddNewCard); //Работа кнопки "Создать" по событию submit
-
-    
-    
-
-
 

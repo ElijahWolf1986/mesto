@@ -26,15 +26,14 @@ const initialCards = [
     }
 ];
 
-// const formValidationOptions = { //Печальная данность
-//     formSelector: '.popup__form',
-//     inputSelector: '.popup__input',
-//     submitButtonSelector: '.popup__button-save',
-//     inactiveButtonClass: 'popup__button-save_disabled',
-//     inputErrorClass: 'popup__input_type_error',
-//     errorClass: 'popup__error_visible'
-//   }
-// enableValidation(formValidationOptions); 
+const formValidationOptions = { //Задан массив настроек для валидации форм
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button-save',
+    inactiveButtonClass: 'popup__button-save_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
+  }
 
 // Выбор элементов для работы с окном "Новое место"
 const popupPlace = document.querySelector('#popup-place');
@@ -80,8 +79,7 @@ function closeByEsc (evt) { //Функция закрытия попапа по 
 function popupCloseOpen (el) { //Функция открытия/закрытия всплывающих окон
     el.classList.toggle('popup_state_opened');
     document.addEventListener('keydown', closeByEsc, {once: true}); //Выполняется один раз после открытия попапа, а затем слушатель удаляется 
-    enableValidation ();
-}
+    enableValidation(formValidationOptions); }
 
 function closeButtons () { //Функция работы закрывающих кнопок на попапах
     const closeButton = Array.from(document.querySelectorAll('.popup__close-icon'));

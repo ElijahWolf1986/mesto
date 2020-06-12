@@ -26,6 +26,16 @@ const initialCards = [
     }
 ];
 
+// const formValidationOptions = { //Печальная данность
+//     formSelector: '.popup__form',
+//     inputSelector: '.popup__input',
+//     submitButtonSelector: '.popup__button-save',
+//     inactiveButtonClass: 'popup__button-save_disabled',
+//     inputErrorClass: 'popup__input_type_error',
+//     errorClass: 'popup__error_visible'
+//   }
+// enableValidation(formValidationOptions); 
+
 // Выбор элементов для работы с окном "Новое место"
 const popupPlace = document.querySelector('#popup-place');
 const addButton = document.querySelector('.profile__add-button'); 
@@ -50,10 +60,6 @@ const popupView = document.querySelector('#popup-view');
 const popupImgView = popupView.querySelector('.popup__img-view');
 const popupTitleView = popupView.querySelector('.popup__title-view');
 
-function popupCloseOpen (el) { //Функция открытия/закрытия всплывающих окон
-    el.classList.toggle('popup_state_opened');
-    document.addEventListener('keydown', closeByEsc, {once: true}); //Выполняется один раз после открытия попапа, а затем слушатель удаляется 
-}
 
 function closeByOverlay () { //Функция закрытия попапа по клику на овелей
     const overlay = Array.from(document.querySelectorAll('.popup__overlay')); 
@@ -69,6 +75,12 @@ function closeByEsc (evt) { //Функция закрытия попапа по 
                 popupItem.classList.remove('popup_state_opened');
             });
         };
+}
+
+function popupCloseOpen (el) { //Функция открытия/закрытия всплывающих окон
+    el.classList.toggle('popup_state_opened');
+    document.addEventListener('keydown', closeByEsc, {once: true}); //Выполняется один раз после открытия попапа, а затем слушатель удаляется 
+    enableValidation ();
 }
 
 function closeButtons () { //Функция работы закрывающих кнопок на попапах
@@ -145,4 +157,5 @@ editButton.addEventListener('click', function () { //Кнопка открыти
 addButton.addEventListener('click', () => {popupCloseOpen(popupPlace)}); //Кнопка открытия редактирования карточек
 popupFormAuthor.addEventListener('submit', forSubmitHandler); //Работа кнопки "Сохранить" по событию submit
 popupFormPlace.addEventListener('submit', forAddNewCard); //Работа кнопки "Создать" по событию submit
+
 

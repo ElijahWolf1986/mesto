@@ -40,12 +40,12 @@
                 <div class="popup__overlay"> </div>
                 <div class="popup__container">
                     <button type="button" class="popup__close-icon"></button>
-                    <form name="popup_author_form" action="#" method="POST" class="popup__form">
+                    <form name="popup_author_form" action="#" method="POST" class="popup__form" novalidate>
                         <h2 class="popup__title">Редактировать профиль</h2>
                         <fieldset class="popup__form-author-info">
-                            <input id="author-input" type="text" name="author" required placeholder="Введите имя" value="" class="popup__input"/>
+                            <input id="author-input" type="text" name="author" minlength="2" maxlength="40" required placeholder="Введите имя" value="" class="popup__input"/>
                             <span id="author-input-error" class="popup__error_visible"></span>
-                            <input id="metier-input" type="text" name="metier" required placeholder="Введите род занятий" value="" class="popup__input" />
+                            <input id="metier-input" type="text" name="metier" minlength="2" maxlength="200" required placeholder="Введите род занятий" value="" class="popup__input" />
                             <span id="metier-input-error" class="popup__error_visible"></span>
                         </fieldset> 
                         <button type="submit" value="" class="popup__button-save">Сохранить</button>                   
@@ -57,12 +57,12 @@
                 <div class="popup__overlay"> </div>
                 <div class="popup__container">
                     <button type="button" name='closePlace' class="popup__close-icon"></button>
-                    <form name="popup_place_form" action="#" method="POST" class="popup__form">
+                    <form name="popup_place_form" action="#" method="POST" class="popup__form" novalidate>
                         <h2 class="popup__title">Новое место</h2>
                         <fieldset class="popup__form-author-info">
-                            <input id="place-input" type="text" name="place" required placeholder="Название" value="" class="popup__input"/>
+                            <input id="place-input" type="text" name="place" minlength="1" maxlength="30" required placeholder="Название" value="" class="popup__input"/>
                             <span id="place-input-error" class="popup__error_visible"></span>
-                            <input id="url-input" type="text" name="url" required placeholder="Ссылка на картинку" value="" class="popup__input" />
+                            <input id="url-input" type="url" name="url" required placeholder="Ссылка на картинку" value="" class="popup__input" />
                             <span id="url-input-error" class="popup__error_visible"></span>
                         </fieldset> 
                         <button type="submit" value="" class="popup__button-save">Создать</button>                   

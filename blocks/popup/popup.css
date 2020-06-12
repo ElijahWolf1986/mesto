@@ -8,8 +8,9 @@
 @import url('./__container-view/popup__container-view.css');
 @import url('./__img-view/popup__img-view.css');
 @import url('./__title-view/popup__title-view.css');
-@import url('./__input/popup__input_type_error.css');
+@import url('./__input_type_error/popup__input_type_error.css');
 @import url('./__error_visible/popup__error_visible.css');
+@import url('./__button-save_disabled/popup__button-save_disabled.css');
 @import url('./__overlay/popup__overlay.css');
 
 

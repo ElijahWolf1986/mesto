@@ -39,6 +39,7 @@ const formValidationOptionsNew = { //Задан массив настроек д
 const popupPlace = document.querySelector('#popup-place');
 const addButton = document.querySelector('.profile__add-button');
 const popupFormPlace = document.forms.popup_place_form;
+const buttonSave = popupFormPlace.querySelector('.popup__button-save');
 const place = popupFormPlace.elements.place;
 const url = popupFormPlace.elements.url;
 const gallery = document.querySelector('.gallery');
@@ -143,9 +144,9 @@ function forAddNewCard(evt) { // Функция добавления новой 
     gallery.prepend(createNewCard(place.value, url.value));
     place.value = '';
     url.value = '';
-    enableValidation(formValidationOptionsNew);
+    buttonSave.classList.add('popup__button-save_disabled');
+    buttonSave.setAttribute('disabled', true);
     popupClose(popupPlace);
-    
 }
 
 function fillPopupAuthor () { // Функция открытия попапа автор

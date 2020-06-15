@@ -30,9 +30,9 @@ const formValidationOptionsNew = { //Задан массив настроек д
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button-save',
-    inactiveButtonClass: '.popup__button-save_disabled',
-    inputErrorClass: '.popup__input_type_error',
-    errorClass: '.popup__error_visible'
+    inactiveButtonClass: 'popup__button-save_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
 };
 
 // Выбор элементов для работы с окном "Новое место"

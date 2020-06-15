@@ -143,13 +143,17 @@ function forAddNewCard(evt) { // Функция добавления новой 
     gallery.prepend(createNewCard(place.value, url.value));
     place.value = '';
     url.value = '';
+    enableValidation(formValidationOptionsNew);
     popupClose(popupPlace);
+    
 }
 
 function fillPopupAuthor () { // Функция открытия попапа автор
     userName.value = profileUserName.textContent;
     metier.value = profileMetier.textContent;
     popupOpen(popupAuthor);
+    enableValidation(formValidationOptionsNew);
+
 }
 
 // Исполнение задач на странице пользователя:

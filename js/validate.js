@@ -5,58 +5,61 @@ function hasInvalidInput(inputList) {//Функция проверяет все 
     });
 }
 
-function toggleButtonState(inputList, buttonElement) { //Функция переключает статус кнопок а зависимости от работы ф-ции hasInvalidInput
+function toggleButtonState(options, inputList, buttonElement) { //Функция переключает статус кнопок а зависимости от работы ф-ции hasInvalidInput
     if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add(formValidationOptions.inactiveButtonClass);
+        buttonElement.classList.add(options.inactiveButtonClass);
         buttonElement.setAttribute('disabled', true);
 
     } else {
-        buttonElement.classList.remove(formValidationOptions.inactiveButtonClass);
+        buttonElement.classList.remove(options.inactiveButtonClass);
         buttonElement.removeAttribute('disabled');
 
     }
 }
 
-function showInputError(formElement, inputElement, errorMessage) { //Функция выводит ошибку при заполнении формы
+function showInputError(options, formElement, inputElement, errorMessage) { //Функция выводит ошибку при заполнении формы
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-    inputElement.classList.add(formValidationOptions.inputErrorClass);
+    inputElement.classList.add(options.inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add(formValidationOptions.errorClass);
+    errorElement.classList.add(options.errorClass);
 }
 
-function hideInputError(formElement, inputElement) { // Функция убирает ошибку при заполнении формы
+function hideInputError(options, formElement, inputElement) { // Функция убирает ошибку при заполнении формы
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-    inputElement.classList.remove(formValidationOptions.inputErrorClass);
-    errorElement.classList.remove(formValidationOptions.errorClass);
+    inputElement.classList.remove(options.inputErrorClass);
+    errorElement.classList.remove(options.errorClass);
     errorElement.textContent = '';
 }
 
-function isValid(formElement, inputElement) { //Функция проверяет наличие ошибки при заполнении формы
+function isValid(options, formElement, inputElement) { //Функция проверяет наличие ошибки при заполнении формы
     if (!inputElement.validity.valid) {
-        showInputError(formElement, inputElement, inputElement.validationMessage);
+        showInputError(options, formElement, inputElement, inputElement.validationMessage);
     } else {
-        hideInputError(formElement, inputElement);
+        hideInputError(options, formElement, inputElement);
     }
 }
 
-function setEventListeners(formElement) { //Функция добавляет слушатели к полям инпут формы
-    const inputList = Array.from(formElement.querySelectorAll(formValidationOptions.inputSelector));
-    const buttonElement = formElement.querySelector(formValidationOptions.submitButtonSelector);
-    toggleButtonState(inputList, buttonElement);
+function setEventListeners(options, formElement) { //Функция добавляет слушатели к полям инпут формы
+    const inputList = Array.from(formElement.querySelectorAll(options.inputSelector));
+    const buttonElement = formElement.querySelector(options.submitButtonSelector);
+    toggleButtonState(options, inputList, buttonElement);
     inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', () => {
-            isValid(formElement, inputElement);
-            toggleButtonState(inputList, buttonElement)
+            isValid(options, formElement, inputElement);
+            toggleButtonState(options, inputList, buttonElement)
         });
     });
 }
 
 function enableValidation(options) { //Функция добавляет слушатели ко всем формам на сайте
-    const formList = Array.from(document.querySelectorAll(formValidationOptions.formSelector));
+    const formList = Array.from(document.querySelectorAll(options.formSelector));
+    // console.log(formList);
     formList.forEach((formElement) => {
         formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
         });
-        setEventListeners(formElement);
+        setEventListeners(options, formElement);
     });
 }
+
+

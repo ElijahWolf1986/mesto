@@ -26,13 +26,13 @@ const initialCards = [
     }
 ];
 
-const formValidationOptions = { //Задан массив настроек для валидации форм
+const formValidationOptionsNew = { //Задан массив настроек для валидации форм
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button-save',
-    inactiveButtonClass: 'popup__button-save_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible'
+    inactiveButtonClass: '.popup__button-save_disabled',
+    inputErrorClass: '.popup__input_type_error',
+    errorClass: '.popup__error_visible'
 };
 
 // Выбор элементов для работы с окном "Новое место"
@@ -68,17 +68,15 @@ function closeByOverlay() { //Функция закрытия попапа по 
 }
 
 function closeByEsc(evt) { //Функция закрытия попапа по клику клавиши Esc
-    const openedAllreadyPopup = document.querySelector('.popup_state_opened')
+    const openedPopup = document.querySelector('.popup_state_opened')
     if (evt.key === 'Escape') {
-        popupClose(openedAllreadyPopup);
+        popupClose(openedPopup);
     }
 }
-
 
 function popupOpen(el) { //Функция открытия попапа 
     el.classList.add('popup_state_opened');
     document.addEventListener('keydown', closeByEsc);
-    enableValidation(formValidationOptions);
 }
 
 function popupClose(el) { //Функция закрытия попапа
@@ -148,15 +146,18 @@ function forAddNewCard(evt) { // Функция добавления новой 
     popupClose(popupPlace);
 }
 
-// Исполнение задач на странице пользователя:
-renderCards(initialCards);
-closeByOverlay();
-closeButtons();
-editButton.addEventListener('click', function () { //Кнопка открытия редактирования автора
+function fillPopupAuthor () { // Функция открытия попапа автор
     userName.value = profileUserName.textContent;
     metier.value = profileMetier.textContent;
     popupOpen(popupAuthor);
-});
+}
+
+// Исполнение задач на странице пользователя:
+enableValidation(formValidationOptionsNew);
+renderCards(initialCards);
+closeByOverlay();
+closeButtons();
+editButton.addEventListener('click', fillPopupAuthor); //Кнопка открытия редактирования автора
 addButton.addEventListener('click', () => { popupOpen(popupPlace) }); //Кнопка открытия редактирования карточек
 popupFormAuthor.addEventListener('submit', forSubmitHandler); //Работа кнопки "Сохранить" по событию submit
 popupFormPlace.addEventListener('submit', forAddNewCard); //Работа кнопки "Создать" по событию submit

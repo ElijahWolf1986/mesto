@@ -1,3 +1,6 @@
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
+
 // Задан массив карточек
 const initialCards = [
     {
@@ -43,8 +46,6 @@ const buttonSave = popupFormPlace.querySelector('.popup__button-save');
 const place = popupFormPlace.elements.place;
 const url = popupFormPlace.elements.url;
 const gallery = document.querySelector('.gallery');
-const cardTemplate = document.querySelector('#card').content;
-
 
 // Выбор элементов для работы с окном "Редактировать профиль"
 const popupAuthor = document.querySelector('#popup-author');
@@ -54,12 +55,7 @@ const profileMetier = document.querySelector('.profile__info-subtitle');
 const popupFormAuthor = document.forms.popup_author_form;
 const userName = popupFormAuthor.elements.author;
 const metier = popupFormAuthor.elements.metier;
-
-//Выбор элементов для работы с "Обзорынм окном"
-const popupView = document.querySelector('#popup-view');
-const popupImgView = popupView.querySelector('.popup__img-view');
-const popupTitleView = popupView.querySelector('.popup__title-view');
-
+const buttonSaveAuthor = popupFormAuthor.querySelector('.popup__button-save');
 
 function closeByOverlay() { //Функция закрытия попапа по клику на овелей
     const overlay = Array.from(document.querySelectorAll('.popup__overlay'));
@@ -70,8 +66,8 @@ function closeByOverlay() { //Функция закрытия попапа по 
 
 function closeByEsc(evt) { //Функция закрытия попапа по клику клавиши Esc
     const openedPopup = document.querySelector('.popup_state_opened')
-    if (evt.key === 'Escape') {
-        popupClose(openedPopup);
+    if (evt.key === 'Escape' && (openedPopup)) {
+        openedPopup.classList.remove('popup_state_opened');
     }
 }
 
@@ -92,6 +88,14 @@ function closeButtons() { //Функция работы закрывающих �
     });
 }
 
+function fillPopupAuthor() { // Функция открытия попапа автор
+    userName.value = profileUserName.textContent;
+    metier.value = profileMetier.textContent;
+    popupOpen(popupAuthor);
+    buttonSaveAuthor.classList.remove('popup__button-save_disabled');
+    buttonSaveAuthor.removeAttribute('disabled');
+}
+
 function forSubmitHandler(evt) { // Функция изменения данных по Автору
     evt.preventDefault();
     profileUserName.textContent = userName.value;
@@ -99,49 +103,11 @@ function forSubmitHandler(evt) { // Функция изменения данны
     popupClose(popupAuthor);
 }
 
-function cardDelete(evt) { //Функция удаления карточек
-    evt.target.closest('.card').remove();
-}
-
-function cardLike(evt) { //Функция лайка карточек
-    evt.target.closest('.card__like').classList.toggle('card__like_state_active');
-}
-
-function cardView(evt) { //Функция открытия карточки 
-    const cardImg = evt.target.closest('.card__img');
-    popupImgView.src = cardImg.src;
-    popupImgView.alt = cardImg.alt;
-    popupTitleView.textContent = cardImg.alt;
-    popupOpen(popupView);
-}
-
-function createNewCard(name, link) { // Функция создания новой карточки: получаем шаблон, собираем карточку, устанавливаем слушатели
-    const newCard = cardTemplate.cloneNode(true); //Клонирование шаблона
-    const cardTitle = newCard.querySelector('.card__title');
-    const cardImg = newCard.querySelector('.card__img');
-    cardTitle.textContent = name;
-    cardImg.src = link;
-    cardImg.alt = name;
-    const delButton = newCard.querySelector('.card__trash');
-    delButton.addEventListener('click', cardDelete);
-    const likeButton = newCard.querySelector('.card__like');
-    likeButton.addEventListener('click', cardLike);
-    const imgButton = newCard.querySelector('.card__img');
-    imgButton.addEventListener('click', cardView);
-    return newCard;
-}
-
-function putCard(el) { //Функция добавления карточки в разметку в конец показа
-    gallery.append(createNewCard(el.name, el.link));
-}
-
-function renderCards() { //Функция вывода карточек на экран
-    initialCards.forEach(putCard);
-}
-
 function forAddNewCard(evt) { // Функция добавления новой карточки пользователя в начало показа
     evt.preventDefault();
-    gallery.prepend(createNewCard(place.value, url.value));
+    const card = new Card(place.value, url.value, '#card');
+    const cardElement = card.createNewCard();
+    gallery.prepend(cardElement);
     place.value = '';
     url.value = '';
     buttonSave.classList.add('popup__button-save_disabled');
@@ -149,16 +115,28 @@ function forAddNewCard(evt) { // Функция добавления новой 
     popupClose(popupPlace);
 }
 
-function fillPopupAuthor () { // Функция открытия попапа автор
-    userName.value = profileUserName.textContent;
-    metier.value = profileMetier.textContent;
-    popupOpen(popupAuthor);
-    enableValidation(formValidationOptionsNew);
 
+function renderCards(el) { // Функция вывода карточек на экран пользователя
+    el.forEach((item) => {
+        const card = new Card(item.name, item.link, '#card');
+        const cardElement = card.createNewCard();
+        gallery.append(cardElement);
+    });
+}
+
+function activateValidation(options) { // Функция активирования валидации форм 
+    const formList = Array.from(document.querySelectorAll(options.formSelector));
+    formList.forEach((formElement) => {
+        formElement.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+        });
+        const formValidator = new FormValidator(options, formElement);
+        formValidator.enableValidation();
+    });
 }
 
 // Исполнение задач на странице пользователя:
-enableValidation(formValidationOptionsNew);
+activateValidation(formValidationOptionsNew);
 renderCards(initialCards);
 closeByOverlay();
 closeButtons();

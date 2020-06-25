@@ -10,13 +10,22 @@ export class FormValidator {
         });
     }
 
+    _disableButtonState(buttonElement) {
+        buttonElement.classList.add(this._options.inactiveButtonClass);
+        buttonElement.setAttribute('disabled', true);
+    }
+
+    enableButtonState(buttonElement) {
+        buttonElement.classList.remove(this._options.inactiveButtonClass);
+        buttonElement.removeAttribute('disabled');
+    }
+
     _toggleButtonState(inputList, buttonElement) {
         if (this._hasInvalidInput(inputList)) {
-            buttonElement.classList.add(this._options.inactiveButtonClass);
-            buttonElement.setAttribute('disabled', true);
+            this._disableButtonState(buttonElement);
         } else {
-            buttonElement.classList.remove(this._options.inactiveButtonClass);
-            buttonElement.removeAttribute('disabled');
+            this.enableButtonState(buttonElement);
+
         }
     }
 

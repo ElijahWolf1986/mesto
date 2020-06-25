@@ -67,7 +67,7 @@ function closeByOverlay() { //Функция закрытия попапа по 
 function closeByEsc(evt) { //Функция закрытия попапа по клику клавиши Esc
     const openedPopup = document.querySelector('.popup_state_opened')
     if (evt.key === 'Escape' && (openedPopup)) {
-        openedPopup.classList.remove('popup_state_opened');
+        popupClose(openedPopup);
     }
 }
 
@@ -92,8 +92,8 @@ function fillPopupAuthor() { // Функция открытия попапа а�
     userName.value = profileUserName.textContent;
     metier.value = profileMetier.textContent;
     popupOpen(popupAuthor);
-    buttonSaveAuthor.classList.remove('popup__button-save_disabled');
-    buttonSaveAuthor.removeAttribute('disabled');
+    const formValidator = new FormValidator(formValidationOptionsNew, popupFormAuthor);
+    formValidator.enableButtonState(buttonSaveAuthor);
 }
 
 function forSubmitHandler(evt) { // Функция изменения данных по Автору

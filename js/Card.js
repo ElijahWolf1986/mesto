@@ -18,11 +18,6 @@ export class Card {
         evt.target.closest('.card__like').classList.toggle('card__like_state_active');
     }
 
-    _cardClose(el) {
-        el.classList.remove('popup_state_opened');
-        document.removeEventListener('keydown', this._closeByEsc);
-    }
-
     _cardOpen(el) {
         el.classList.add('popup_state_opened');
         document.addEventListener('keydown', this._closeByEsc);
@@ -54,9 +49,11 @@ export class Card {
     createNewCard() {
         this._element = this._getTemplate();
         this._setEventListeners(); // навешиваем слушателей которые определим ранее как методы лайка, удаления и зума карточки
-        this._element.querySelector('.card__title').textContent = this._name;
-        this._element.querySelector('.card__img').src = this._link;
-        this._element.querySelector('.card__img').alt = this._name;
+        const cardTitle = this._element.querySelector('.card__title');
+        const cardImg = this._element.querySelector('.card__img');
+        cardTitle.textContent = this._name;
+        cardImg.src = this._link;
+        cardImg.alt = this._name;
         return this._element;
     }
 }

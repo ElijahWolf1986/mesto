@@ -56,6 +56,8 @@ const popupFormAuthor = document.forms.popup_author_form;
 const userName = popupFormAuthor.elements.author;
 const metier = popupFormAuthor.elements.metier;
 const buttonSaveAuthor = popupFormAuthor.querySelector('.popup__button-save');
+const formValidatorAuthor = new FormValidator(formValidationOptionsNew, popupFormAuthor);
+const formValidatorPlace = new FormValidator(formValidationOptionsNew, popupFormPlace);
 
 function closeByOverlay() { //Функция закрытия попапа по клику на овелей
     const overlay = Array.from(document.querySelectorAll('.popup__overlay'));
@@ -92,8 +94,7 @@ function fillPopupAuthor() { // Функция открытия попапа а�
     userName.value = profileUserName.textContent;
     metier.value = profileMetier.textContent;
     popupOpen(popupAuthor);
-    const formValidator = new FormValidator(formValidationOptionsNew, popupFormAuthor);
-    formValidator.enableButtonState(buttonSaveAuthor);
+    formValidatorAuthor.enableButtonState(buttonSaveAuthor);
 }
 
 function forSubmitHandler(evt) { // Функция изменения данных по Автору
@@ -110,8 +111,7 @@ function forAddNewCard(evt) { // Функция добавления новой 
     gallery.prepend(cardElement);
     place.value = '';
     url.value = '';
-    buttonSave.classList.add('popup__button-save_disabled');
-    buttonSave.setAttribute('disabled', true);
+    formValidatorPlace.disableButtonState(buttonSave);
     popupClose(popupPlace);
 }
 
@@ -124,19 +124,9 @@ function renderCards(el) { // Функция вывода карточек на 
     });
 }
 
-function activateValidation(options) { // Функция активирования валидации форм 
-    const formList = Array.from(document.querySelectorAll(options.formSelector));
-    formList.forEach((formElement) => {
-        formElement.addEventListener('submit', (evt) => {
-            evt.preventDefault();
-        });
-        const formValidator = new FormValidator(options, formElement);
-        formValidator.enableValidation();
-    });
-}
-
 // Исполнение задач на странице пользователя:
-activateValidation(formValidationOptionsNew);
+formValidatorAuthor.enableValidation();
+formValidatorPlace.enableValidation();
 renderCards(initialCards);
 closeByOverlay();
 closeButtons();

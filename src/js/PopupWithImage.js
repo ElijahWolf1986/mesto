@@ -1,3 +1,6 @@
+// Класс отвечающий за работу всплывающих карточек (зум изображений)
+// Добавляет в сплывающее окно ссылку на картинку, описание и alt 
+
 import { Popup } from './Popup.js';
 
 export default class PopupWhithImage extends Popup {

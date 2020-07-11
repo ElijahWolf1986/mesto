@@ -1,3 +1,6 @@
+// Класс карточки, создает и управляет поведением карточек
+// Колбэк функция handleCardClick определяет поведение карточки при клике на нее
+
 export class Card {
     constructor(name, link, cardTemplate, { handleCardClick }) {
         this._name = name;

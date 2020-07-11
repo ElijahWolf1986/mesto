@@ -1,3 +1,7 @@
+// Класс отвечающий за всплывающие окна с формами взаимодействия с пользователем
+// Имеет функцию колбэк, определяющую способ взаимодействия с данными и работу кнопки submit
+// Для каждого типа взаимодейсвий можно написать свою функцию
+
 import { Popup } from './Popup.js';
 
 export default class PopupWhithForm extends Popup {
@@ -36,10 +40,6 @@ export default class PopupWhithForm extends Popup {
     close() {
         super.close();
         this._setInputValuesEmpty();
-    }
-
-    open() {
-        super.open();
     }
 
 }

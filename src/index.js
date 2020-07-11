@@ -1,9 +1,11 @@
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
-import { Section } from './Section.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js';
+import './styles/index.css';
+
+import { Card } from './js/Card.js';
+import { FormValidator } from './js/FormValidator.js';
+import { Section } from './js/Section.js';
+import PopupWithImage from './js/PopupWithImage.js';
+import PopupWithForm from './js/PopupWithForm.js';
+import UserInfo from './js/UserInfo.js';
 // Задан массив карточек
 const initialCards = [
     {
@@ -41,6 +43,7 @@ const formValidationOptionsNew = { //Задан массив настроек д
     errorClass: 'popup__error_visible'
 };
 
+// Определение объектов в DOM необходимых для работы 
 const addButton = document.querySelector('.profile__add-button');
 const popupFormPlace = document.forms.popup_place_form;
 const popupFormAuthor = document.forms.popup_author_form;
@@ -49,7 +52,7 @@ const buttonSaveAuthor = popupFormAuthor.querySelector('.popup__button-save');
 const userName = popupFormAuthor.elements.author;
 const metier = popupFormAuthor.elements.metier;
 
-
+// Создание экземпляров классов для работы
 const formValidatorAuthor = new FormValidator(formValidationOptionsNew, popupFormAuthor);
 const formValidatorPlace = new FormValidator(formValidationOptionsNew, popupFormPlace);
 const newAuthorData = new UserInfo('.profile__info-title', '.profile__info-subtitle');
@@ -90,7 +93,7 @@ const popupAddPlace = new PopupWithForm('#popup-place', {
 
     }
 });
-
+// Выполняемый код на основе классов
 formValidatorAuthor.enableValidation();
 formValidatorPlace.enableValidation();
 cardList.renderItems();

@@ -1,6 +1,9 @@
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
-
+import { Section } from './Section.js';
+import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js';
 // Задан массив карточек
 const initialCards = [
     {
@@ -38,101 +41,66 @@ const formValidationOptionsNew = { //Задан массив настроек д
     errorClass: 'popup__error_visible'
 };
 
-// Выбор элементов для работы с окном "Новое место"
-const popupPlace = document.querySelector('#popup-place');
 const addButton = document.querySelector('.profile__add-button');
 const popupFormPlace = document.forms.popup_place_form;
-const buttonSave = popupFormPlace.querySelector('.popup__button-save');
-const place = popupFormPlace.elements.place;
-const url = popupFormPlace.elements.url;
-const gallery = document.querySelector('.gallery');
-
-// Выбор элементов для работы с окном "Редактировать профиль"
-const popupAuthor = document.querySelector('#popup-author');
-const editButton = document.querySelector('.profile__info-edit-button');
-const profileUserName = document.querySelector('.profile__info-title');
-const profileMetier = document.querySelector('.profile__info-subtitle');
 const popupFormAuthor = document.forms.popup_author_form;
+const editButton = document.querySelector('.profile__info-edit-button');
+const buttonSaveAuthor = popupFormAuthor.querySelector('.popup__button-save');
 const userName = popupFormAuthor.elements.author;
 const metier = popupFormAuthor.elements.metier;
-const buttonSaveAuthor = popupFormAuthor.querySelector('.popup__button-save');
+
+
 const formValidatorAuthor = new FormValidator(formValidationOptionsNew, popupFormAuthor);
 const formValidatorPlace = new FormValidator(formValidationOptionsNew, popupFormPlace);
+const newAuthorData = new UserInfo('.profile__info-title', '.profile__info-subtitle');
 
-function closeByOverlay() { //Функция закрытия попапа по клику на овелей
-    const overlay = Array.from(document.querySelectorAll('.popup__overlay'));
-    overlay.forEach(function (overlayItem) {
-        overlayItem.addEventListener('click', (evt) => { popupClose(evt.target.closest('.popup')) });
-    });
-}
-
-function closeByEsc(evt) { //Функция закрытия попапа по клику клавиши Esc
-    const openedPopup = document.querySelector('.popup_state_opened')
-    if (evt.key === 'Escape' && (openedPopup)) {
-        popupClose(openedPopup);
+const popupAddAuthor = new PopupWithForm('#popup-author', {
+    handleFormSubmit: (item) => {
+        newAuthorData.setUserInfo(item.author, item.metier);
     }
-}
+});
 
-function popupOpen(el) { //Функция открытия попапа 
-    el.classList.add('popup_state_opened');
-    document.addEventListener('keydown', closeByEsc);
-}
-
-function popupClose(el) { //Функция закрытия попапа
-    el.classList.remove('popup_state_opened');
-    document.removeEventListener('keydown', closeByEsc);
-}
-
-function closeButtons() { //Функция работы закрывающих кнопок на попапах
-    const closeButton = Array.from(document.querySelectorAll('.popup__close-icon'));
-    closeButton.forEach(function (item) {
-        item.addEventListener('click', (evt) => popupClose(evt.target.closest('.popup')));
-    });
-}
-
-function fillPopupAuthor() { // Функция открытия попапа автор
-    userName.value = profileUserName.textContent;
-    metier.value = profileMetier.textContent;
-    popupOpen(popupAuthor);
-    formValidatorAuthor.enableButtonState(buttonSaveAuthor);
-}
-
-function forSubmitHandler(evt) { // Функция изменения данных по Автору
-    evt.preventDefault();
-    profileUserName.textContent = userName.value;
-    profileMetier.textContent = metier.value;
-    popupClose(popupAuthor);
-}
-
-function forAddNewCard(evt) { // Функция добавления новой карточки пользователя в начало показа
-    evt.preventDefault();
-    const card = new Card(place.value, url.value, '#card');
-    const cardElement = card.createNewCard();
-    gallery.prepend(cardElement);
-    place.value = '';
-    url.value = '';
-    formValidatorPlace.disableButtonState(buttonSave);
-    popupClose(popupPlace);
-}
-
-
-function renderCards(el) { // Функция вывода карточек на экран пользователя
-    el.forEach((item) => {
-        const card = new Card(item.name, item.link, '#card');
+const cardList = new Section({ //создаем экземляр класса для отрисовки элементов
+    items: initialCards,
+    renderer: (item) => {
+        const card = new Card(item.name, item.link, '#card', {
+            handleCardClick: (evt) => { //callback функция, задающая параметры поведения окна при открытии (View)
+                const popupImg = new PopupWithImage('#popup-view');
+                popupImg.setEventListeners(); //Навешиваем слушатели закрытия при открытом окне
+                popupImg.open(evt);
+            }
+        });
         const cardElement = card.createNewCard();
-        gallery.append(cardElement);
-    });
-}
+        cardList.addItem(cardElement);
+    }
+}, '.gallery');
 
-// Исполнение задач на странице пользователя:
+const popupAddPlace = new PopupWithForm('#popup-place', {
+    handleFormSubmit: (item) => {
+        const newCard = new Card(item.place, item.url, '#card', {
+            handleCardClick: (evt) => {
+                const popupImg = new PopupWithImage('#popup-view');
+                popupImg.setEventListeners();
+                popupImg.open(evt);
+            }
+        });
+
+        const newCardElement = newCard.createNewCard();
+        cardList.addNewItem(newCardElement);
+
+    }
+});
+
 formValidatorAuthor.enableValidation();
 formValidatorPlace.enableValidation();
-renderCards(initialCards);
-closeByOverlay();
-closeButtons();
-editButton.addEventListener('click', fillPopupAuthor); //Кнопка открытия редактирования автора
-addButton.addEventListener('click', () => { popupOpen(popupPlace) }); //Кнопка открытия редактирования карточек
-popupFormAuthor.addEventListener('submit', forSubmitHandler); //Работа кнопки "Сохранить" по событию submit
-popupFormPlace.addEventListener('submit', forAddNewCard); //Работа кнопки "Создать" по событию submit
-
-
+cardList.renderItems();
+popupAddPlace.setEventListeners();
+popupAddAuthor.setEventListeners();
+addButton.addEventListener('click', () => popupAddPlace.open());
+editButton.addEventListener('click', () => {
+    const authorInfo = newAuthorData.getUserInfo();
+    userName.value = authorInfo.name;
+    metier.value = authorInfo.metier;
+    formValidatorAuthor.enableButtonState(buttonSaveAuthor);
+    popupAddAuthor.open();
+});

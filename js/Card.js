@@ -1,8 +1,9 @@
 export class Card {
-    constructor(name, link, cardTemplate) {
+    constructor(name, link, cardTemplate, { handleCardClick }) {
         this._name = name;
         this._link = link;
         this._cardTemplate = cardTemplate;
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -18,37 +19,19 @@ export class Card {
         evt.target.closest('.card__like').classList.toggle('card__like_state_active');
     }
 
-    _cardOpen(el) {
-        el.classList.add('popup_state_opened');
-        document.addEventListener('keydown', this._closeByEsc);
-    }
-
-    _closeByEsc(evt) {
-        const openedPopup = document.querySelector('.popup_state_opened')
-        if (evt.key === 'Escape' && (openedPopup)) {
-            openedPopup.classList.remove('popup_state_opened');
-        }
-    }
-
     _cardView(evt) {
-        const cardImg = evt.target.closest('.card__img');
-        const popupView = document.querySelector('#popup-view');
-        const popupImgView = popupView.querySelector('.popup__img-view');
-        const popupTitleView = popupView.querySelector('.popup__title-view');
-        popupImgView.src = cardImg.src;
-        popupImgView.alt = cardImg.alt;
-        popupTitleView.textContent = cardImg.alt;
-        this._cardOpen(popupView);
+        this._handleCardClick(evt);
     }
 
-    _setEventListeners() {
+    _setEventListenersCard() {
         this._element.querySelector('.card__trash').addEventListener('click', (evt) => this._cardDelete(evt));
         this._element.querySelector('.card__like').addEventListener('click', (evt) => this._cardLike(evt));
         this._element.querySelector('.card__img').addEventListener('click', (evt) => this._cardView(evt));
+
     }
-    createNewCard() {
+    createNewCard() { //Создает новую карточку по шаблону и заносит туда ссылку и описание картинки
         this._element = this._getTemplate();
-        this._setEventListeners(); // навешиваем слушателей которые определим ранее как методы лайка, удаления и зума карточки
+        this._setEventListenersCard(); // навешиваем слушателей которые определим ранее как методы лайка, удаления и зума карточки
         const cardTitle = this._element.querySelector('.card__title');
         const cardImg = this._element.querySelector('.card__img');
         cardTitle.textContent = this._name;

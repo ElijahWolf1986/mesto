@@ -11,9 +11,8 @@ export default class PopupWhithImage extends Popup {
     open(evt) {
         super.open();
         const cardImg = evt.target.closest('.card__img');
-        const popupView = document.querySelector('#popup-view');
-        const popupImgView = popupView.querySelector('.popup__img-view');
-        const popupTitleView = popupView.querySelector('.popup__title-view');
+        const popupImgView = this._container.querySelector('.popup__img-view');
+        const popupTitleView = this._container.querySelector('.popup__title-view');
         popupImgView.src = cardImg.src;
         popupImgView.alt = cardImg.alt;
         popupTitleView.textContent = cardImg.alt;

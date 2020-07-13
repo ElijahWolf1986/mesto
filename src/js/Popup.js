@@ -32,7 +32,7 @@ export class Popup {
     }
 
     _removeEventListeners() {
-        document.removeEventListener('keydown', (evt) => this._handleEscClose(evt));
+        document.removeEventListener('keydown', this._handleEscClose.bind(this));
     }
 
 

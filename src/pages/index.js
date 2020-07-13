@@ -1,11 +1,11 @@
-import './styles/index.css';
+import '../styles/index.css';
 
-import { Card } from './js/Card.js';
-import { FormValidator } from './js/FormValidator.js';
-import { Section } from './js/Section.js';
-import PopupWithImage from './js/PopupWithImage.js';
-import PopupWithForm from './js/PopupWithForm.js';
-import UserInfo from './js/UserInfo.js';
+import { Card } from '../js/Card.js';
+import { FormValidator } from '../js/FormValidator.js';
+import { Section } from '../js/Section.js';
+import PopupWithImage from '../js/PopupWithImage.js';
+import PopupWithForm from '../js/PopupWithForm.js';
+import UserInfo from '../js/UserInfo.js';
 // Задан массив карточек
 const initialCards = [
     {
@@ -99,11 +99,16 @@ formValidatorPlace.enableValidation();
 cardList.renderItems();
 popupAddPlace.setEventListeners();
 popupAddAuthor.setEventListeners();
-addButton.addEventListener('click', () => popupAddPlace.open());
+addButton.addEventListener('click', () => {
+    formValidatorPlace.enableValidation(); //Корректно устанавливается состояние кнопки
+    popupAddPlace.open();
+    formValidatorPlace.resetErrors(); //Сбрасываем ошибки с предыдущих открытий окна
+});
 editButton.addEventListener('click', () => {
     const authorInfo = newAuthorData.getUserInfo();
     userName.value = authorInfo.name;
     metier.value = authorInfo.metier;
-    formValidatorAuthor.enableButtonState(buttonSaveAuthor);
+    formValidatorAuthor.enableValidation(); //Корректно устанавливается состояние кнопки
     popupAddAuthor.open();
+    formValidatorAuthor.resetErrors(); //Сбрасываем ошибки с предыдущих открытий окна
 });

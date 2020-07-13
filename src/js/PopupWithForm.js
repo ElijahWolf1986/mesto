@@ -9,6 +9,7 @@ export default class PopupWhithForm extends Popup {
         super(containerSelector);
         this._handleFormSubmit = handleFormSubmit;
         this._container = document.querySelector(containerSelector);
+        
     }
 
     _getInputValues() {
@@ -34,6 +35,7 @@ export default class PopupWhithForm extends Popup {
         this._inputList = this._container.querySelectorAll('.popup__input');
         this._inputList.forEach(input => {
             input.value = '';
+            
         });
     }
 

@@ -43,6 +43,14 @@ export class FormValidator {
         errorElement.textContent = '';
     }
 
+    resetErrors() {
+        const inputList = Array.from(this._formElement.querySelectorAll(this._options.inputSelector));
+        inputList.forEach((inputElement) => {
+            this._hideInputError(inputElement);
+        });
+
+    }
+
     _isValid(inputElement) {
         if (!inputElement.validity.valid) {
             this._showInputError(inputElement, inputElement.validationMessage);
@@ -58,7 +66,7 @@ export class FormValidator {
         inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._isValid(inputElement);
-                this._toggleButtonState(inputList, buttonElement)
+                this._toggleButtonState(inputList, buttonElement);
             });
         });
     }

@@ -94,8 +94,6 @@ const popupAddPlace = new PopupWithForm('#popup-place', {
     }
 });
 // Выполняемый код на основе классов
-formValidatorAuthor.enableValidation();
-formValidatorPlace.enableValidation();
 cardList.renderItems();
 popupAddPlace.setEventListeners();
 popupAddAuthor.setEventListeners();

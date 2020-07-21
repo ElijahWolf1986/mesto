@@ -56,14 +56,32 @@ const renderPage = res => { //Функция рендера карточек н�
                         popupAsk.setEventListeners(id, container);
                         popupAsk.open();
                 
-                    }
-            });
+                    }}, 
+                    {
+                        handleCardLike: (id, heart, status, likesCounter) => {
+                            if(!status) {
+                                api.setLike(id)
+                                    .then((res) => {
+                                        heart.classList.add('card__like_state_active');
+                                        likesCounter.textContent = res.likes.length;
+                    
+                                    })
+                            } else {
+                                api.delLike(id)
+                                    .then((res) => {
+                                        heart.classList.remove('card__like_state_active');
+                                        likesCounter.textContent = res.likes.length;
+                                    })
+                            }
+                        }    
+                     }
+            );
             const cardElement = card.createNewCard();
             cardList.addItem(cardElement);
         }
     }, '.gallery');
      cardList.renderItems();
-}
+};
 
 api.getUserInfo() // Получение данных о пользователе с сервера и отображение
     .then((res) => {
@@ -72,9 +90,9 @@ api.getUserInfo() // Получение данных о пользователе
 
 api.getInitialCards() //Рендерим карточки после запроса на сервер
     .then(renderPage)
-    .catch((err) => {
-        console.log (`Ошибка загрузки данных с сервера... ${err}`);
-    })
+    // .catch((err) => {
+    //     console.log (`Ошибка загрузки данных с сервера... ${err}`);
+    // })
 
 const popupAddAuthor = new PopupWithForm('#popup-author', { // Изменение данных о пользователе
 handleFormSubmit: (item) => {
@@ -88,7 +106,6 @@ handleFormSubmit: (item) => {
 }
 });
 
-
 const popupAddPlace = new PopupWithForm('#popup-place', {
     handleFormSubmit: (item) => {
     api.setNewCard(item.place, item.url)
@@ -99,8 +116,6 @@ const popupAddPlace = new PopupWithForm('#popup-place', {
     }   
     })
 
-//************* end of good code */
-
 const popupAsk = new PopupWithDelete('#popup-delete', {
     handleFormDelete: (id, container) => {
         api.deleteCard(id)
@@ -108,7 +123,6 @@ const popupAsk = new PopupWithDelete('#popup-delete', {
             container.remove();
         })
     }
-        
     });
 
     const newCardHandle = res => {
@@ -122,23 +136,29 @@ const popupAsk = new PopupWithDelete('#popup-delete', {
         popupAsk.setEventListeners(id, container);
         popupAsk.open();
 
-    }
+    }}, {
+    handleCardLike: (id, heart, status, likesCounter) => {
+        if(!status) {
+            api.setLike(id)
+                .then((res) => {
+                    heart.classList.add('card__like_state_active');
+                    likesCounter.textContent = res.likes.length;
+
+                })
+        } else {
+            api.delLike(id)
+                .then((res) => {
+                    heart.classList.remove('card__like_state_active');
+                    likesCounter.textContent = res.likes.length;
+                })
+        }
+    }    
  })
     const newCardElement = newCard.createNewCard();
     newCardPlace.prepend(newCardElement);
 }   
 
 
-
-
-
-
-    
-
-
-
-
-       
      
 // Выполняемый код на основе классов
 popupAddPlace.setEventListeners();
@@ -157,14 +177,3 @@ editButton.addEventListener('click', () => {
     popupAddAuthor.open();
     formValidatorAuthor.resetErrors(); 
 });
-
-// тестовые вызовы
-
-// api.getInitialCards() 
-//     .then((res) => {
-//         console.log(res.owner._id);
-//     })
-
-// api.deleteCard('5f15c3708b2c57001f147a79')    
-
-//************************ */

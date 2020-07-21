@@ -1,8 +1,10 @@
 // Класс карточки, создает и управляет поведением карточек
 // Колбэк функция handleCardClick определяет поведение карточки при клике на нее
 
+import Api from "./Api";
+
 export class Card {
-    constructor(item, cardTemplate, { handleCardClick }, { handleCardDelete }) {
+    constructor(item, cardTemplate, { handleCardClick }, { handleCardDelete }, { handleCardLike }) {
         this._name = item.name;
         this._link = item.link;
         this._id = item._id;
@@ -12,6 +14,7 @@ export class Card {
         this._cardTemplate = cardTemplate;
         this._handleCardClick = handleCardClick;
         this._handleCardDelete = handleCardDelete;
+        this._handleCardLike = handleCardLike;
     }
 
     _getTemplate() {
@@ -24,10 +27,27 @@ export class Card {
         this._handleCardDelete(this._id, container); 
     }
 
-    _cardLike(evt) {
-
-        evt.target.closest('.card__like').classList.toggle('card__like_state_active');
+    _isLike(heart) {
+        this._likesOwners.forEach((owner) => {
+            let isLike = 0;
+            if(owner._id === '0ee52a6058a8608e0a1dc5e4') {
+                heart.classList.add('card__like_state_active');
+                return isLike = 1;
+            } else {return isLike = 0;}
+        })
     }
+
+    _cardLike(evt) {
+        const heart = evt.target.closest('.card__like');
+        const counter = evt.target.closest('.card').querySelector('.card__like_counter');
+        let status;
+        if(evt.target.closest('.card__like').classList.contains('card__like_state_active')){
+            status = 1;
+        } else {
+            status = 0;
+        }
+        this._handleCardLike(this._id, heart, status, counter); 
+    }   
 
     _cardView(evt) {
         this._handleCardClick(evt);
@@ -35,7 +55,10 @@ export class Card {
 
     _setEventListenersCard() {
         this._element.querySelector('.card__trash').addEventListener('click', (evt) => this._cardPushTrash(evt));
-        this._element.querySelector('.card__like').addEventListener('click', (evt) => this._cardLike(evt));
+        this._element.querySelector('.card__like').addEventListener('click', (evt) => {
+            this._cardLike(evt);
+            
+        });
         this._element.querySelector('.card__img').addEventListener('click', (evt) => this._cardView(evt));
 
     }
@@ -55,11 +78,13 @@ export class Card {
         const cardTitle = this._element.querySelector('.card__title');
         const cardImg = this._element.querySelector('.card__img');
         const likesCounter = this._element.querySelector('.card__like_counter');
+        const heart = this._element.querySelector('.card__like');
         const trash = this._element.querySelector('.card__trash');
         cardTitle.textContent = this._name;
         cardImg.src = this._link;
         cardImg.alt = this._name;
         likesCounter.textContent = this._likesCount;
+        this._isLike(heart);
         this._getLikesOwners();
 
 

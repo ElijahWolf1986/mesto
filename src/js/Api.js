@@ -63,8 +63,17 @@ export default class Api {
             .catch(this._handleResponseError)
     }
 
-    deleteCard(id) {
-        return fetch(`${this._url}/cards/${id}`, {
+    setLike(id) {
+        return fetch(`${this._url}/cards/likes/${id}`, {
+            method: 'PUT',
+            headers: this._headers
+        }) 
+            .then(this._handleResponse)
+            .catch(this._handleResponseError)
+    }
+
+    delLike(id) {
+        return fetch(`${this._url}/cards/likes/${id}`, {
             method: 'DELETE',
             headers: this._headers
         }) 

@@ -1,38 +1,12 @@
 import '../styles/index.css';
-
 import { Card } from '../js/Card.js';
 import { FormValidator } from '../js/FormValidator.js';
 import { Section } from '../js/Section.js';
 import PopupWithImage from '../js/PopupWithImage.js';
 import PopupWithForm from '../js/PopupWithForm.js';
 import UserInfo from '../js/UserInfo.js';
-// Задан массив карточек
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
+import PopupWithDelete from '../js/PopupWithDelete.js'
+import Api from '../js/Api.js';
 
 const formValidationOptionsNew = { //Задан массив настроек для валидации форм
     formSelector: '.popup__form',
@@ -51,62 +25,146 @@ const editButton = document.querySelector('.profile__info-edit-button');
 const buttonSaveAuthor = popupFormAuthor.querySelector('.popup__button-save');
 const userName = popupFormAuthor.elements.author;
 const metier = popupFormAuthor.elements.metier;
+const newCardPlace = document.querySelector('.gallery');
+
+// Создание конфигурации для api что дано нам от бэкенда
+const configApi = {
+    url: 'https://mesto.nomoreparties.co/v1/cohort-13',
+    headers: {
+        Authorization: '54672975-eeab-4137-bd8f-7cd077a45ce9',
+        'Content-Type': 'application/json'
+    }
+};
 
 // Создание экземпляров классов для работы
 const formValidatorAuthor = new FormValidator(formValidationOptionsNew, popupFormAuthor);
 const formValidatorPlace = new FormValidator(formValidationOptionsNew, popupFormPlace);
 const newAuthorData = new UserInfo('.profile__info-title', '.profile__info-subtitle');
+const api = new Api(configApi); // Создание экземпляра api
+const renderPage = res => { //Функция рендера карточек на странице
+    const cardList = new Section({ 
+        items: res,
+        renderer: (item) => {
+            const card = new Card(item , '#card', {
+                handleCardClick: (evt) => { 
+                    const popupImg = new PopupWithImage('#popup-view');
+                    popupImg.setEventListeners(); 
+                    popupImg.open(evt);
+                }},
+                {
+                    handleCardDelete: (id, container) => {
+                        popupAsk.setEventListeners(id, container);
+                        popupAsk.open();
+                
+                    }
+            });
+            const cardElement = card.createNewCard();
+            cardList.addItem(cardElement);
+        }
+    }, '.gallery');
+     cardList.renderItems();
+}
 
-const popupAddAuthor = new PopupWithForm('#popup-author', {
-    handleFormSubmit: (item) => {
-        newAuthorData.setUserInfo(item.author, item.metier);
-    }
+api.getUserInfo() // Получение данных о пользователе с сервера и отображение
+    .then((res) => {
+        newAuthorData.setUserInfo(res.name, res.about);
+})
+
+api.getInitialCards() //Рендерим карточки после запроса на сервер
+    .then(renderPage)
+    .catch((err) => {
+        console.log (`Ошибка загрузки данных с сервера... ${err}`);
+    })
+
+const popupAddAuthor = new PopupWithForm('#popup-author', { // Изменение данных о пользователе
+handleFormSubmit: (item) => {
+    api.setUserInfo(item.author, item.metier)
+        .then((res) => {
+            newAuthorData.setUserInfo(res.name, res.about);
+        })
+        .catch((err) => {
+            console.log (`Ошибка загрузки данных на сервер... ${err}`);
+        })
+}
 });
 
-const cardList = new Section({ //создаем экземляр класса для отрисовки элементов
-    items: initialCards,
-    renderer: (item) => {
-        const card = new Card(item.name, item.link, '#card', {
-            handleCardClick: (evt) => { //callback функция, задающая параметры поведения окна при открытии (View)
-                const popupImg = new PopupWithImage('#popup-view');
-                popupImg.setEventListeners(); //Навешиваем слушатели закрытия при открытом окне
-                popupImg.open(evt);
-            }
-        });
-        const cardElement = card.createNewCard();
-        cardList.addItem(cardElement);
-    }
-}, '.gallery');
 
 const popupAddPlace = new PopupWithForm('#popup-place', {
     handleFormSubmit: (item) => {
-        const newCard = new Card(item.place, item.url, '#card', {
-            handleCardClick: (evt) => {
-                const popupImg = new PopupWithImage('#popup-view');
-                popupImg.setEventListeners();
-                popupImg.open(evt);
-            }
-        });
+    api.setNewCard(item.place, item.url)
+        .then(newCardHandle)
+        .catch((err) => {
+            console.log (`Ошибка загрузки карты на сервер... ${err}`);
+        })
+    }   
+    })
 
-        const newCardElement = newCard.createNewCard();
-        cardList.addNewItem(newCardElement);
+//************* end of good code */
+
+const popupAsk = new PopupWithDelete('#popup-delete', {
+    handleFormDelete: (id, container) => {
+        api.deleteCard(id)
+        .then(() => {
+            container.remove();
+        })
+    }
+        
+    });
+
+    const newCardHandle = res => {
+    const newCard = new Card(res, '#card', {
+    handleCardClick: (evt) => { 
+        const popupImg = new PopupWithImage('#popup-view');
+        popupImg.setEventListeners(); 
+        popupImg.open(evt);
+    }}, {
+    handleCardDelete: (id, container) => {
+        popupAsk.setEventListeners(id, container);
+        popupAsk.open();
 
     }
-});
+ })
+    const newCardElement = newCard.createNewCard();
+    newCardPlace.prepend(newCardElement);
+}   
+
+
+
+
+
+
+    
+
+
+
+
+       
+     
 // Выполняемый код на основе классов
-cardList.renderItems();
 popupAddPlace.setEventListeners();
 popupAddAuthor.setEventListeners();
 addButton.addEventListener('click', () => {
-    formValidatorPlace.enableValidation(); //Корректно устанавливается состояние кнопки
+    formValidatorPlace.enableValidation(); 
     popupAddPlace.open();
-    formValidatorPlace.resetErrors(); //Сбрасываем ошибки с предыдущих открытий окна
+    formValidatorPlace.resetErrors(); 
+    
 });
 editButton.addEventListener('click', () => {
     const authorInfo = newAuthorData.getUserInfo();
     userName.value = authorInfo.name;
     metier.value = authorInfo.metier;
-    formValidatorAuthor.enableValidation(); //Корректно устанавливается состояние кнопки
+    formValidatorAuthor.enableValidation(); 
     popupAddAuthor.open();
-    formValidatorAuthor.resetErrors(); //Сбрасываем ошибки с предыдущих открытий окна
+    formValidatorAuthor.resetErrors(); 
 });
+
+// тестовые вызовы
+
+// api.getInitialCards() 
+//     .then((res) => {
+//         console.log(res.owner._id);
+//     })
+
+// api.deleteCard('5f15c3708b2c57001f147a79')    
+
+//************************ */

@@ -3,7 +3,9 @@
 @import url('./__place/card__place.css');
 @import url('./__like/card__like.css');
 @import url('./__img/card__img.css');
+@import url('./__like/card__like_counter.css');
 @import url('./__like/_state_active/card__like_state_active.css');
+@import url('./__trash/card__trash_type_visible.css');
 
 
 .card {

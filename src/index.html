@@ -15,7 +15,9 @@
             <!-- Section Profile -->
             <section class="profile">
                 <div class="profile__wrapper">
-                    <img src="./images/profile/avatar.jpg" alt="аватар" class="profile__avatar">
+                            <div class="profile__edit">
+                            <img src="./images/profile/avatar.jpg" alt="аватар" class="profile__avatar">
+                            </div>
                     <div class="profile__data-container">
                         <div class="profile__info">
                             <h1 class="profile__info-title"></h1>
@@ -84,11 +86,22 @@
             <button type="button" class="popup__close-icon"></button>
             <form name="popup_delete" action="#" method="POST" class="popup__form" novalidate>
                 <h2 class="popup__title">Вы уверены?</h2>
-
-
-
-
                 <button type="submit" value="" class="popup__button-save">Да</button>                   
+            </form>
+        </div>
+    </section>
+    <!-- Section Popup-edit-avatar -->
+    <section id='popup-avatar' class="popup">
+        <div class="popup__overlay"> </div>
+        <div class="popup__container">
+            <button type="button" class="popup__close-icon"></button>
+            <form name="popup_avatar" action="#" method="POST" class="popup__form" novalidate>
+                <h2 class="popup__title">Обновите аватар</h2>
+                <fieldset class="popup__form-author-info">
+                    <input id="url-input" type="url" name="url" required placeholder="Ссылка на аватар" value="" class="popup__input" />
+                    <span id="url-input-error" class="popup__error_visible"></span>
+                </fieldset> 
+                <button type="submit" value="" class="popup__button-save">Сохранить</button>                   
             </form>
         </div>
     </section>

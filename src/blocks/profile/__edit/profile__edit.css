@@ -1,0 +1,14 @@
+.profile__edit {
+    min-width: 120px;
+    min-height: 120px;
+    margin-right: 30px;
+    background-image: url('../../../images/profile/edit_author.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+@media screen and (max-width: 550px) {
+    .profile__edit {
+        margin: 0 0 30px 0;
+    }
+}

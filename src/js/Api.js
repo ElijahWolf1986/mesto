@@ -81,11 +81,22 @@ export default class Api {
             .catch(this._handleResponseError)
     }
 
+    setAvatar(avatar) {
+        return fetch(`${this._url}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                avatar: `${avatar}` 
+            })
+        }) 
+            .then(this._handleResponse)
+            .catch(this._handleResponseError)
+    }
 
 
 
 
-
+    
 }
 
 

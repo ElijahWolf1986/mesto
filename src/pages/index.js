@@ -21,8 +21,11 @@ const formValidationOptionsNew = { //Задан массив настроек д
 const addButton = document.querySelector('.profile__add-button');
 const popupFormPlace = document.forms.popup_place_form;
 const popupFormAuthor = document.forms.popup_author_form;
+const popupFormAvatar = document.forms.popup_avatar;
 const editButton = document.querySelector('.profile__info-edit-button');
-const buttonSaveAuthor = popupFormAuthor.querySelector('.popup__button-save');
+const editAvatarButton = document.querySelector('.profile__edit');
+const avatar = document.querySelector('.profile__avatar');
+// const buttonSaveAuthor = popupFormAuthor.querySelector('.popup__button-save');
 const userName = popupFormAuthor.elements.author;
 const metier = popupFormAuthor.elements.metier;
 const newCardPlace = document.querySelector('.gallery');
@@ -39,6 +42,7 @@ const configApi = {
 // Создание экземпляров классов для работы
 const formValidatorAuthor = new FormValidator(formValidationOptionsNew, popupFormAuthor);
 const formValidatorPlace = new FormValidator(formValidationOptionsNew, popupFormPlace);
+const formValidatorAvatar = new FormValidator(formValidationOptionsNew, popupFormAvatar);
 const newAuthorData = new UserInfo('.profile__info-title', '.profile__info-subtitle');
 const api = new Api(configApi); // Создание экземпляра api
 const renderPage = res => { //Функция рендера карточек на странице
@@ -86,7 +90,9 @@ const renderPage = res => { //Функция рендера карточек н�
 api.getUserInfo() // Получение данных о пользователе с сервера и отображение
     .then((res) => {
         newAuthorData.setUserInfo(res.name, res.about);
+        avatar.src = res.avatar;
 })
+
 
 api.getInitialCards() //Рендерим карточки после запроса на сервер
     .then(renderPage)
@@ -115,6 +121,20 @@ const popupAddPlace = new PopupWithForm('#popup-place', {
         })
     }   
     })
+
+const changeAvatar = res => {
+    avatar.src = res.avatar;
+}    
+
+const popupAddAvatar = new PopupWithForm('#popup-avatar', {
+    handleFormSubmit: (item) => {
+    api.setAvatar(item.url)
+        .then(changeAvatar)
+        .catch((err) => {
+            console.log (`Ошибка загрузки карты на сервер... ${err}`);
+        })
+    }   
+    })     
 
 const popupAsk = new PopupWithDelete('#popup-delete', {
     handleFormDelete: (id, container) => {
@@ -157,12 +177,12 @@ const popupAsk = new PopupWithDelete('#popup-delete', {
     const newCardElement = newCard.createNewCard();
     newCardPlace.prepend(newCardElement);
 }   
-
-
      
 // Выполняемый код на основе классов
 popupAddPlace.setEventListeners();
 popupAddAuthor.setEventListeners();
+popupAddAvatar.setEventListeners();
+
 addButton.addEventListener('click', () => {
     formValidatorPlace.enableValidation(); 
     popupAddPlace.open();
@@ -176,4 +196,11 @@ editButton.addEventListener('click', () => {
     formValidatorAuthor.enableValidation(); 
     popupAddAuthor.open();
     formValidatorAuthor.resetErrors(); 
+});
+
+editAvatarButton.addEventListener('click', () => {
+    formValidatorAvatar.enableValidation(); 
+    popupAddAvatar.open();
+    formValidatorAvatar.resetErrors();
+     
 });

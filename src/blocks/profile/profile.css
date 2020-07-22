@@ -6,6 +6,7 @@
 @import url('./__info-edit-button/profile__info-edit-button.css');
 @import url('./__info-subtitle/profile__info-subtitle.css');
 @import url('./__info-title/profile__info-title.css');
+@import url('./__edit/profile__edit.css');
 
 .profile {
     color: #fff;

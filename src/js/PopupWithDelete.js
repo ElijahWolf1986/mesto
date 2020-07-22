@@ -1,7 +1,11 @@
 import { Popup } from './Popup.js';
 
+/**
+ * Класс отвечающий за работу окна спрашивающего хотите ли вы удалить свою карточку
+ */
+
 export default class PopupWithDelete extends Popup {
-    constructor(containerSelector, {handleFormDelete}) {
+    constructor(containerSelector, { handleFormDelete }) {
         super(containerSelector);
         this._handleFormDelete = handleFormDelete;
         this._container = document.querySelector(containerSelector);
@@ -10,14 +14,16 @@ export default class PopupWithDelete extends Popup {
     setEventListeners(id, container) {
         super.setEventListeners();
         this._container.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        this._handleFormDelete(id, container);
-        this._close();   
+            evt.preventDefault();
+            this._handleFormDelete(id, container);
         }, { once: true });
     }
 
-    _close() {
+    setButtonState(state) {
+        this._container.querySelector('.popup__button-save').textContent = state;
+    }
+
+    close() {
         super.close();
     }
-    
 }

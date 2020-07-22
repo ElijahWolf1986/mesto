@@ -1,11 +1,11 @@
 export default class Api {
-    constructor({url, headers = {}}) {
-        this._url = url; //https://mesto.nomoreparties.co/v1/cohortId/
+    constructor({ url, headers = {} }) {
+        this._url = url;
         this._headers = headers;
     }
 
     _handleResponse(res) {
-        if(res.ok) {
+        if (res.ok) {
             return res.json();
         } else {
             console.log('Ошибка подключения к серверу');
@@ -19,13 +19,13 @@ export default class Api {
     }
 
     getInitialCards() { //worked
-        return fetch(`${this._url}/cards`, {headers: this._headers})
+        return fetch(`${this._url}/cards`, { headers: this._headers })
             .then(this._handleResponse)
             .catch(this._handleResponseError)
     }
 
     getUserInfo() {
-        return fetch(`${this._url}/users/me`, {headers: this._headers})
+        return fetch(`${this._url}/users/me`, { headers: this._headers })
             .then(this._handleResponse)
             .catch(this._handleResponseError)
     }
@@ -35,9 +35,9 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify({
                 name: `${name}`,
-                about: `${about}`       
+                about: `${about}`
             })
-        }) 
+        })
             .then(this._handleResponse)
             .catch(this._handleResponseError)
     }
@@ -47,9 +47,9 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify({
                 name: `${name}`,
-                link: `${link}`       
+                link: `${link}`
             })
-        }) 
+        })
             .then(this._handleResponse)
             .catch(this._handleResponseError)
 
@@ -58,7 +58,7 @@ export default class Api {
         return fetch(`${this._url}/cards/${id}`, {
             method: 'DELETE',
             headers: this._headers
-        }) 
+        })
             .then(this._handleResponse)
             .catch(this._handleResponseError)
     }
@@ -67,7 +67,7 @@ export default class Api {
         return fetch(`${this._url}/cards/likes/${id}`, {
             method: 'PUT',
             headers: this._headers
-        }) 
+        })
             .then(this._handleResponse)
             .catch(this._handleResponseError)
     }
@@ -76,7 +76,7 @@ export default class Api {
         return fetch(`${this._url}/cards/likes/${id}`, {
             method: 'DELETE',
             headers: this._headers
-        }) 
+        })
             .then(this._handleResponse)
             .catch(this._handleResponseError)
     }
@@ -86,17 +86,12 @@ export default class Api {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
-                avatar: `${avatar}` 
+                avatar: `${avatar}`
             })
-        }) 
+        })
             .then(this._handleResponse)
             .catch(this._handleResponseError)
     }
-
-
-
-
-    
 }
 
 

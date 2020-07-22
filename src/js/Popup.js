@@ -26,9 +26,8 @@ export class Popup {
         const closeButton = this._container.querySelector('.popup__close-icon');
         const overlay = this._container.querySelector('.popup__overlay');
         overlay.addEventListener('click', () => this.close());
-        closeButton.addEventListener('click', () => this.close()); 
-        document.addEventListener('keydown', (evt) => this._handleEscClose(evt)); 
-
+        closeButton.addEventListener('click', () => this.close());
+        document.addEventListener('keydown', (evt) => this._handleEscClose(evt));
     }
 
     _removeEventListeners() {

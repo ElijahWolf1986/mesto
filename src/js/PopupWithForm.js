@@ -9,7 +9,7 @@ export default class PopupWhithForm extends Popup {
         super(containerSelector);
         this._handleFormSubmit = handleFormSubmit;
         this._container = document.querySelector(containerSelector);
-        
+
     }
 
     _getInputValues() {
@@ -26,8 +26,6 @@ export default class PopupWhithForm extends Popup {
         this._container.addEventListener('submit', (evt) => {
             evt.preventDefault();
             this._handleFormSubmit(this._getInputValues());
-            this.close();
-
         });
     }
 
@@ -35,13 +33,15 @@ export default class PopupWhithForm extends Popup {
         this._inputList = this._container.querySelectorAll('.popup__input');
         this._inputList.forEach(input => {
             input.value = '';
-            
         });
+    }
+
+    setButtonState(state) {
+        this._container.querySelector('.popup__button-save').textContent = state;
     }
 
     close() {
         super.close();
         this._setInputValuesEmpty();
     }
-
 }

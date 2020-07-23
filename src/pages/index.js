@@ -5,7 +5,7 @@ import { Section } from '../components/Section.js';
 import PicturePopup from '../components/PicturePopup.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
-import PopupWithDelete from '../components/PopupWithDelete.js'
+import PopupWithImage from '../components/PopupWithImage.js'
 import Api from '../components/Api.js';
 
 const formValidationOptionsNew = { //Задан массив настроек для валидации форм
@@ -52,7 +52,7 @@ const renderPage = res => { //Функция рендера карточек н�
         renderer: (item) => {
             const card = new Card(item, userId, '#card', {
                 handleCardClick: (evt) => {
-                    const popupImg = new PicturePopup('#popup-view');
+                    const popupImg = new PopupWithImage('#popup-view');
                     popupImg.setEventListeners();
                     popupImg.setEventListenerEsc();
                     popupImg.open(evt);
@@ -146,7 +146,7 @@ const popupAddAvatar = new PopupWithForm('#popup-avatar', { // Работа по
     }
 })
 
-const popupAsk = new PopupWithDelete('#popup-delete', { // Работа попапа удаления карточки
+const popupAsk = new PicturePopup('#popup-delete', { // Работа попапа удаления карточки
     handleFormDelete: (id, container) => {
         popupAsk.setButtonState('Удаление...');
         api.deleteCard(id)
@@ -165,7 +165,7 @@ const popupAsk = new PopupWithDelete('#popup-delete', { // Работа попа
 const newCardHandle = res => {  // Функция создание пользовательской карточки
     const newCard = new Card(res, userId, '#card', {
         handleCardClick: (evt) => {
-            const popupImg = new PicturePopup('#popup-view');
+            const popupImg = new PopupWithImage('#popup-view');
             popupImg.setEventListeners();
             popupImg.setEventListenerEsc();
             popupImg.open(evt);

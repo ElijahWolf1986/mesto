@@ -1,21 +1,29 @@
-// Класс отвечающий за работу всплывающих карточек (зум изображений)
-// Добавляет в сплывающее окно ссылку на картинку, описание и alt 
-
 import { Popup } from './Popup.js';
 
+/**
+ * Класс отвечающий за работу окна спрашивающего хотите ли вы удалить свою карточку
+ */
+
 export default class PicturePopup extends Popup {
-    constructor(containerSelector) {
+    constructor(containerSelector, { handleFormDelete }) {
         super(containerSelector);
+        this._handleFormDelete = handleFormDelete;
+        this._container = document.querySelector(containerSelector);
     }
 
-    open(evt) {
-        super.open();
-        const cardImg = evt.target.closest('.card__img');
-        const popupImgView = this._container.querySelector('.popup__img-view');
-        const popupTitleView = this._container.querySelector('.popup__title-view');
-        popupImgView.src = cardImg.src;
-        popupImgView.alt = cardImg.alt;
-        popupTitleView.textContent = cardImg.alt;
+    setEventListeners(id, container) {
+        super.setEventListeners();
+        this._container.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+            this._handleFormDelete(id, container);
+        }, { once: true });
+    }
+
+    setButtonState(state) {
+        this._container.querySelector('.popup__button-save').textContent = state;
+    }
+
+    close() {
+        super.close();
     }
 }
-

@@ -1,11 +1,11 @@
 import './index.css';
-import { Card } from '../js/Card.js';
-import { FormValidator } from '../js/FormValidator.js';
-import { Section } from '../js/Section.js';
-import PicturePopup from '../js/PicturePopup.js';
-import PopupWithForm from '../js/PopupWithForm.js';
-import UserInfo from '../js/UserInfo.js';
-import PopupWithDelete from '../js/PopupWithDelete.js'
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { Section } from '../components/Section.js';
+import PicturePopup from '../components/PicturePopup.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import PopupWithDelete from '../components/PopupWithDelete.js'
 import Api from '../components/Api.js';
 
 const formValidationOptionsNew = { //Задан массив настроек для валидации форм

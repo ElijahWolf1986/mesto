@@ -3,7 +3,7 @@
 
 import { Popup } from './Popup.js';
 
-export default class PopupWhithImage extends Popup {
+export default class PicturePopup extends Popup {
     constructor(containerSelector) {
         super(containerSelector);
     }

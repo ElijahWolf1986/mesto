@@ -1,10 +1,8 @@
 // Класс карточки, создает и управляет поведением карточек
 // Колбэк функция handleCardClick определяет поведение карточки при клике на нее
 
-import Api from "./Api";
-
 export class Card {
-    constructor(item, cardTemplate, { handleCardClick }, { handleCardDelete }, { handleCardLike }) {
+    constructor(item, userId, cardTemplate, { handleCardClick }, { handleCardDelete }, { handleCardLike }) {
         this._name = item.name;
         this._link = item.link;
         this._id = item._id;
@@ -15,6 +13,7 @@ export class Card {
         this._handleCardClick = handleCardClick;
         this._handleCardDelete = handleCardDelete;
         this._handleCardLike = handleCardLike;
+        this._userId = userId;
     }
 
     _getTemplate() {
@@ -29,11 +28,9 @@ export class Card {
 
     _isLike(heart) {
         this._likesOwners.forEach((owner) => {
-            let isLike = 0;
-            if (owner._id === '0ee52a6058a8608e0a1dc5e4') {
+            if (owner._id === this._userId) {
                 heart.classList.add('card__like_state_active');
-                return isLike = 1;
-            } else { return isLike = 0; }
+            } 
         })
     }
 
@@ -63,7 +60,7 @@ export class Card {
 
     _getLikesOwners() { //Доп фича -  просмотр имен тех кто лайкнул при наведении на сердечко
         const likesTitle = this._element.querySelector('.card__like');
-        let sumury = [];
+        const sumury = [];
         this._likesOwners.forEach((owner) => {
             sumury.push(owner.name);
         })
@@ -86,7 +83,7 @@ export class Card {
         this._getLikesOwners();
         /** Этот кусок определяет принадлежит ли
          * карточка владельцу, если да, то отбражает значок удаления даже после перезагрузки страницы */
-        if (this._ownerId === '0ee52a6058a8608e0a1dc5e4') {
+        if (this._ownerId === this._userId) {
             trash.classList.add('card__trash_type_visible');
         }
         return this._element;

@@ -1,12 +1,12 @@
-import '../styles/index.css';
+import './index.css';
 import { Card } from '../js/Card.js';
 import { FormValidator } from '../js/FormValidator.js';
 import { Section } from '../js/Section.js';
-import PopupWithImage from '../js/PopupWithImage.js';
+import PicturePopup from '../js/PicturePopup.js';
 import PopupWithForm from '../js/PopupWithForm.js';
 import UserInfo from '../js/UserInfo.js';
 import PopupWithDelete from '../js/PopupWithDelete.js'
-import Api from '../js/Api.js';
+import Api from '../components/Api.js';
 
 const formValidationOptionsNew = { //Задан массив настроек для валидации форм
     formSelector: '.popup__form',
@@ -29,6 +29,7 @@ const userName = popupFormAuthor.elements.author;
 const metier = popupFormAuthor.elements.metier;
 const newCardPlace = document.querySelector('.gallery');
 
+
 // Создание конфигурации для api что дано нам от бэкенда
 const configApi = {
     url: 'https://mesto.nomoreparties.co/v1/cohort-13',
@@ -37,7 +38,7 @@ const configApi = {
         'Content-Type': 'application/json'
     }
 };
-
+const userId = '0ee52a6058a8608e0a1dc5e4';
 // Создание экземпляров классов для работы
 const formValidatorAuthor = new FormValidator(formValidationOptionsNew, popupFormAuthor);
 const formValidatorPlace = new FormValidator(formValidationOptionsNew, popupFormPlace);
@@ -49,16 +50,18 @@ const renderPage = res => { //Функция рендера карточек н�
     const cardList = new Section({
         items: res,
         renderer: (item) => {
-            const card = new Card(item, '#card', {
+            const card = new Card(item, userId, '#card', {
                 handleCardClick: (evt) => {
-                    const popupImg = new PopupWithImage('#popup-view');
+                    const popupImg = new PicturePopup('#popup-view');
                     popupImg.setEventListeners();
+                    popupImg.setEventListenerEsc();
                     popupImg.open(evt);
                 }
             },
                 {
                     handleCardDelete: (id, container) => {
                         popupAsk.setEventListeners(id, container);
+                        popupAsk.setEventListenerEsc();
                         popupAsk.open();
                     }
                 },
@@ -160,15 +163,17 @@ const popupAsk = new PopupWithDelete('#popup-delete', { // Работа попа
 });
 
 const newCardHandle = res => {  // Функция создание пользовательской карточки
-    const newCard = new Card(res, '#card', {
+    const newCard = new Card(res, userId, '#card', {
         handleCardClick: (evt) => {
-            const popupImg = new PopupWithImage('#popup-view');
+            const popupImg = new PicturePopup('#popup-view');
             popupImg.setEventListeners();
+            popupImg.setEventListenerEsc();
             popupImg.open(evt);
         }
     }, {
         handleCardDelete: (id, container) => {
             popupAsk.setEventListeners(id, container);
+            popupAsk.setEventListenerEsc();
             popupAsk.open();
         }
     }, {
@@ -201,7 +206,7 @@ api.getUserInfo() // Получение данных о пользователе
     .catch((err) => {
         console.log(`Ошибка загрузки данных с сервера... ${err}`);
     })
-
+    
 
 api.getInitialCards() //Рендерим карточки после запроса на сервер
     .then(renderPage)
@@ -216,6 +221,7 @@ popupAddAvatar.setEventListeners();
 addButton.addEventListener('click', () => {
     formValidatorPlace.enableValidation();
     popupAddPlace.open();
+    popupAddPlace.setEventListenerEsc();
     formValidatorPlace.resetErrors();
 
 });
@@ -225,12 +231,14 @@ editButton.addEventListener('click', () => {
     metier.value = authorInfo.metier;
     formValidatorAuthor.enableValidation();
     popupAddAuthor.open();
+    popupAddAuthor.setEventListenerEsc();
     formValidatorAuthor.resetErrors();
 });
 
 editAvatarButton.addEventListener('click', () => {
     formValidatorAvatar.enableValidation();
     popupAddAvatar.open();
+    popupAddAvatar.setEventListenerEsc();
     formValidatorAvatar.resetErrors();
 
 });
